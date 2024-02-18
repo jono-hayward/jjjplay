@@ -1,0 +1,640 @@
+{
+  "next_updated": "2024-02-18T02:56:00+00:00",
+  "last_updated": "2024-02-18T02:53:26+00:00",
+  "next": {},
+  "now": {
+    "entity": "Play",
+    "count": null,
+    "arid": "mprRaePkod",
+    "played_time": "2024-02-18T02:52:40+00:00",
+    "service_id": "triplej",
+    "recording": {
+      "entity": "Recording",
+      "arid": "mt5Yma4pDY",
+      "title": "Chalk 1.3.3",
+      "metadata": "2017 Export Wav",
+      "description": null,
+      "duration": 210,
+      "artists": [
+        {
+          "entity": "Artist",
+          "arid": "maEY6RX2NY",
+          "name": "Flume & Jim-E Stack",
+          "artwork": [],
+          "links": [],
+          "is_australian": null,
+          "type": "primary",
+          "role": null
+        }
+      ],
+      "releases": [
+        {
+          "entity": "Release",
+          "arid": "mrmX4v44d5",
+          "title": "Arrived Anxious, Left Bored",
+          "format": "Album",
+          "artwork": [
+            {
+              "entity": "Artwork",
+              "arid": "mix9d25JZP",
+              "url": "https://s3-ap-southeast-2.amazonaws.com/abc-dn-mapi-production/release/mix9d25JZP/1e1968114e69435abdb03bdb7b302cc6.jpg",
+              "title": null,
+              "mini_synopsis": null,
+              "short_synopsis": null,
+              "medium_synopsis": null,
+              "width": 1000,
+              "height": 1000
+            },
+            {
+              "entity": "Artwork",
+              "arid": "miKexoME09",
+              "url": "https://www.abc.net.au/triplej/albums/flumejim-estack-arrivedanxiousleftbored.jpg",
+              "type": "cover",
+              "title": null,
+              "mini_synopsis": null,
+              "short_synopsis": null,
+              "medium_synopsis": null,
+              "width": 1000,
+              "height": 1000
+            },
+            {
+              "entity": "Artwork",
+              "arid": "miRPW28Wje",
+              "url": "https://abc-dn-jjj-rapidplaylist-prod.s3.ap-southeast-2.amazonaws.com/playlist/b37615398f66973937beca31577283699905.jpg",
+              "type": "cover",
+              "title": null,
+              "mini_synopsis": null,
+              "short_synopsis": null,
+              "medium_synopsis": null,
+              "width": 500,
+              "height": 500
+            }
+          ],
+          "links": [],
+          "artists": [
+            {
+              "entity": "Artist",
+              "arid": "maEY6RX2NY",
+              "name": "Flume & Jim-E Stack",
+              "artwork": [],
+              "links": [],
+              "is_australian": null,
+              "type": "primary",
+              "role": null
+            }
+          ],
+          "record_label": null,
+          "release_year": "2023",
+          "release_album_id": "69256"
+        },
+        {
+          "entity": "Release",
+          "arid": "mrOAJ38vz5",
+          "title": "Arrived Anxious, Left Bored",
+          "format": null,
+          "artwork": [
+            {
+              "entity": "Artwork",
+              "arid": "mi0eXQwpXP",
+              "url": "https://www.abc.net.au/triplej/albums/flumejim-estack-arrivedanxiousleftbored.jpg",
+              "type": "cover",
+              "title": null,
+              "mini_synopsis": null,
+              "short_synopsis": null,
+              "medium_synopsis": null,
+              "width": 1000,
+              "height": 1000
+            }
+          ],
+          "links": [],
+          "artists": [
+            {
+              "entity": "Artist",
+              "arid": "maEY6RX2NY",
+              "name": "Flume & Jim-E Stack",
+              "artwork": [],
+              "links": [],
+              "is_australian": null,
+              "type": "primary",
+              "role": null
+            }
+          ],
+          "record_label": null,
+          "release_year": "2023",
+          "release_album_id": null
+        }
+      ],
+      "artwork": [],
+      "links": []
+    },
+    "release": {
+      "entity": "Release",
+      "arid": "mrmX4v44d5",
+      "title": "Arrived Anxious, Left Bored",
+      "format": "Album",
+      "artwork": [
+        {
+          "entity": "Artwork",
+          "arid": "mix9d25JZP",
+          "url": "https://s3-ap-southeast-2.amazonaws.com/abc-dn-mapi-production/release/mix9d25JZP/1e1968114e69435abdb03bdb7b302cc6.jpg",
+          "title": null,
+          "mini_synopsis": null,
+          "short_synopsis": null,
+          "medium_synopsis": null,
+          "width": 1000,
+          "height": 1000
+        },
+        {
+          "entity": "Artwork",
+          "arid": "miKexoME09",
+          "url": "https://www.abc.net.au/triplej/albums/flumejim-estack-arrivedanxiousleftbored.jpg",
+          "type": "cover",
+          "title": null,
+          "mini_synopsis": null,
+          "short_synopsis": null,
+          "medium_synopsis": null,
+          "width": 1000,
+          "height": 1000
+        },
+        {
+          "entity": "Artwork",
+          "arid": "miRPW28Wje",
+          "url": "https://abc-dn-jjj-rapidplaylist-prod.s3.ap-southeast-2.amazonaws.com/playlist/b37615398f66973937beca31577283699905.jpg",
+          "type": "cover",
+          "title": null,
+          "mini_synopsis": null,
+          "short_synopsis": null,
+          "medium_synopsis": null,
+          "width": 500,
+          "height": 500
+        }
+      ],
+      "links": [],
+      "artists": [
+        {
+          "entity": "Artist",
+          "arid": "maEY6RX2NY",
+          "name": "Flume & Jim-E Stack",
+          "artwork": [],
+          "links": [],
+          "is_australian": null,
+          "type": "primary",
+          "role": null
+        }
+      ],
+      "record_label": null,
+      "release_year": "2023",
+      "release_album_id": "69256"
+    }
+  },
+  "prev": {
+    "entity": "Play",
+    "arid": "mpdm5b8Oed",
+    "played_time": "2024-02-18T02:49:14+00:00",
+    "service_id": "triplej",
+    "recording": {
+      "entity": "Recording",
+      "arid": "mtLkDP44kv",
+      "title": "Put Me Thru",
+      "metadata": null,
+      "description": null,
+      "duration": 160,
+      "artists": [
+        {
+          "entity": "Artist",
+          "arid": "mave0bkZ5G",
+          "name": "Anderson .Paak",
+          "artwork": [],
+          "links": [],
+          "is_australian": null,
+          "type": "primary",
+          "role": null
+        }
+      ],
+      "releases": [
+        {
+          "entity": "Release",
+          "arid": "mrKyQBYoX9",
+          "title": "Malibu",
+          "format": null,
+          "artwork": [
+            {
+              "entity": "Artwork",
+              "arid": "miW9735B9G",
+              "url": "https://www.abc.net.au/triplej/albums/54449/covers/original.jpg",
+              "type": "cover",
+              "title": null,
+              "mini_synopsis": null,
+              "short_synopsis": null,
+              "medium_synopsis": null,
+              "width": 750,
+              "height": 750,
+              "sizes": [
+                {
+                  "url": "https://resize.abcradio.net.au/oTUjxgjXf9T1hQu7pW4-1_EZjdE=/100x100/center/middle/https%3A%2F%2Fwww.abc.net.au%2Ftriplej%2Falbums%2F54449%2Fcovers%2Foriginal.jpg",
+                  "width": 100,
+                  "height": 100,
+                  "aspect_ratio": "1x1"
+                },
+                {
+                  "url": "https://resize.abcradio.net.au/r_mdGJ1WsUpYb0szjCQGYeyIHwU=/160x160/center/middle/https%3A%2F%2Fwww.abc.net.au%2Ftriplej%2Falbums%2F54449%2Fcovers%2Foriginal.jpg",
+                  "width": 160,
+                  "height": 160,
+                  "aspect_ratio": "1x1"
+                },
+                {
+                  "url": "https://resize.abcradio.net.au/EXdEODAfqMdjjSL7K5NIPkuTIn4=/340x340/center/middle/https%3A%2F%2Fwww.abc.net.au%2Ftriplej%2Falbums%2F54449%2Fcovers%2Foriginal.jpg",
+                  "width": 340,
+                  "height": 340,
+                  "aspect_ratio": "1x1"
+                },
+                {
+                  "url": "https://resize.abcradio.net.au/4kvpC-1sAJ8KmOulKOciqRQdapw=/580x580/center/middle/https%3A%2F%2Fwww.abc.net.au%2Ftriplej%2Falbums%2F54449%2Fcovers%2Foriginal.jpg",
+                  "width": 580,
+                  "height": 580,
+                  "aspect_ratio": "1x1"
+                },
+                {
+                  "url": "https://resize.abcradio.net.au/mDwUFIoI_N3zZrtdDd07dH_Fu4I=/100x75/center/middle/https%3A%2F%2Fwww.abc.net.au%2Ftriplej%2Falbums%2F54449%2Fcovers%2Foriginal.jpg",
+                  "width": 100,
+                  "height": 75,
+                  "aspect_ratio": "4x3"
+                },
+                {
+                  "url": "https://resize.abcradio.net.au/b19MoaZz3q1RfIZHh1-ALgKTjNc=/160x120/center/middle/https%3A%2F%2Fwww.abc.net.au%2Ftriplej%2Falbums%2F54449%2Fcovers%2Foriginal.jpg",
+                  "width": 160,
+                  "height": 120,
+                  "aspect_ratio": "4x3"
+                },
+                {
+                  "url": "https://resize.abcradio.net.au/y0nBm1_4rG1hrUUKbLKebE-eVTQ=/220x124/center/middle/https%3A%2F%2Fwww.abc.net.au%2Ftriplej%2Falbums%2F54449%2Fcovers%2Foriginal.jpg",
+                  "width": 220,
+                  "height": 124,
+                  "aspect_ratio": "16x9"
+                },
+                {
+                  "url": "https://resize.abcradio.net.au/-A7vAnAEQ1rGPetfkGxrQjmPUPM=/580x326/center/middle/https%3A%2F%2Fwww.abc.net.au%2Ftriplej%2Falbums%2F54449%2Fcovers%2Foriginal.jpg",
+                  "width": 580,
+                  "height": 326,
+                  "aspect_ratio": "16x9"
+                }
+              ]
+            },
+            {
+              "entity": "Artwork",
+              "arid": "miKexo3Jr9",
+              "url": "https://www.abc.net.au/dig/covers/original/paak_malibu.jpg",
+              "type": "cover",
+              "title": null,
+              "mini_synopsis": null,
+              "short_synopsis": null,
+              "medium_synopsis": null,
+              "width": 750,
+              "height": 750,
+              "sizes": [
+                {
+                  "url": "https://resize.abcradio.net.au/hhGsOF2wqCYhh5_MifXVqWY4OtY=/100x100/center/middle/https%3A%2F%2Fwww.abc.net.au%2Fdig%2Fcovers%2Foriginal%2Fpaak_malibu.jpg",
+                  "width": 100,
+                  "height": 100,
+                  "aspect_ratio": "1x1"
+                },
+                {
+                  "url": "https://resize.abcradio.net.au/3XiLEwJbL2ufxcepvyY9MemDTlk=/160x160/center/middle/https%3A%2F%2Fwww.abc.net.au%2Fdig%2Fcovers%2Foriginal%2Fpaak_malibu.jpg",
+                  "width": 160,
+                  "height": 160,
+                  "aspect_ratio": "1x1"
+                },
+                {
+                  "url": "https://resize.abcradio.net.au/jkulfR0cnBpLroTVwsizQiskCU4=/340x340/center/middle/https%3A%2F%2Fwww.abc.net.au%2Fdig%2Fcovers%2Foriginal%2Fpaak_malibu.jpg",
+                  "width": 340,
+                  "height": 340,
+                  "aspect_ratio": "1x1"
+                },
+                {
+                  "url": "https://resize.abcradio.net.au/BYqlGMeDf4yQX8zaz8Vx1RH9tWE=/580x580/center/middle/https%3A%2F%2Fwww.abc.net.au%2Fdig%2Fcovers%2Foriginal%2Fpaak_malibu.jpg",
+                  "width": 580,
+                  "height": 580,
+                  "aspect_ratio": "1x1"
+                },
+                {
+                  "url": "https://resize.abcradio.net.au/usSZdIsEs-QG50s8RXhCkHLBStI=/100x75/center/middle/https%3A%2F%2Fwww.abc.net.au%2Fdig%2Fcovers%2Foriginal%2Fpaak_malibu.jpg",
+                  "width": 100,
+                  "height": 75,
+                  "aspect_ratio": "4x3"
+                },
+                {
+                  "url": "https://resize.abcradio.net.au/SaH_Kq1lSxfvQELBauov5CbWFgE=/160x120/center/middle/https%3A%2F%2Fwww.abc.net.au%2Fdig%2Fcovers%2Foriginal%2Fpaak_malibu.jpg",
+                  "width": 160,
+                  "height": 120,
+                  "aspect_ratio": "4x3"
+                },
+                {
+                  "url": "https://resize.abcradio.net.au/xW1maDgBunHYPYQxutEB2yXltSU=/220x124/center/middle/https%3A%2F%2Fwww.abc.net.au%2Fdig%2Fcovers%2Foriginal%2Fpaak_malibu.jpg",
+                  "width": 220,
+                  "height": 124,
+                  "aspect_ratio": "16x9"
+                },
+                {
+                  "url": "https://resize.abcradio.net.au/RFcP3OiOUEBK2XVgHaBefT-6J6w=/580x326/center/middle/https%3A%2F%2Fwww.abc.net.au%2Fdig%2Fcovers%2Foriginal%2Fpaak_malibu.jpg",
+                  "width": 580,
+                  "height": 326,
+                  "aspect_ratio": "16x9"
+                }
+              ]
+            },
+            {
+              "entity": "Artwork",
+              "arid": "mi7eM2rKpP",
+              "url": "https://www.abc.net.au/triplej/albums/andersonpaak-malibu.jpg",
+              "type": "cover",
+              "title": null,
+              "mini_synopsis": null,
+              "short_synopsis": null,
+              "medium_synopsis": null,
+              "width": 750,
+              "height": 750,
+              "sizes": [
+                {
+                  "url": "https://resize.abcradio.net.au/p7Op3pLzAoj2WkmgFaQMhJVgRQI=/100x100/center/middle/https%3A%2F%2Fwww.abc.net.au%2Ftriplej%2Falbums%2Fandersonpaak-malibu.jpg",
+                  "width": 100,
+                  "height": 100,
+                  "aspect_ratio": "1x1"
+                },
+                {
+                  "url": "https://resize.abcradio.net.au/s9L_ZE3_92_2cL_hiy3DGF5sCHQ=/160x160/center/middle/https%3A%2F%2Fwww.abc.net.au%2Ftriplej%2Falbums%2Fandersonpaak-malibu.jpg",
+                  "width": 160,
+                  "height": 160,
+                  "aspect_ratio": "1x1"
+                },
+                {
+                  "url": "https://resize.abcradio.net.au/0kJvA3_1eetbKP8PmF_YN8RlOzs=/340x340/center/middle/https%3A%2F%2Fwww.abc.net.au%2Ftriplej%2Falbums%2Fandersonpaak-malibu.jpg",
+                  "width": 340,
+                  "height": 340,
+                  "aspect_ratio": "1x1"
+                },
+                {
+                  "url": "https://resize.abcradio.net.au/rBOIbZ20DIZlnlnLaTloN1UFCFQ=/580x580/center/middle/https%3A%2F%2Fwww.abc.net.au%2Ftriplej%2Falbums%2Fandersonpaak-malibu.jpg",
+                  "width": 580,
+                  "height": 580,
+                  "aspect_ratio": "1x1"
+                },
+                {
+                  "url": "https://resize.abcradio.net.au/3yeLEek2XhGwZv6p3jeHePzLtXA=/100x75/center/middle/https%3A%2F%2Fwww.abc.net.au%2Ftriplej%2Falbums%2Fandersonpaak-malibu.jpg",
+                  "width": 100,
+                  "height": 75,
+                  "aspect_ratio": "4x3"
+                },
+                {
+                  "url": "https://resize.abcradio.net.au/diLOYwNfknG8dHib1mJ4wQIcDoo=/160x120/center/middle/https%3A%2F%2Fwww.abc.net.au%2Ftriplej%2Falbums%2Fandersonpaak-malibu.jpg",
+                  "width": 160,
+                  "height": 120,
+                  "aspect_ratio": "4x3"
+                },
+                {
+                  "url": "https://resize.abcradio.net.au/LQFNLwi32vQrqySBhITaa12gO_Y=/220x124/center/middle/https%3A%2F%2Fwww.abc.net.au%2Ftriplej%2Falbums%2Fandersonpaak-malibu.jpg",
+                  "width": 220,
+                  "height": 124,
+                  "aspect_ratio": "16x9"
+                },
+                {
+                  "url": "https://resize.abcradio.net.au/4Y-8TZCCQ3VEIFzyEigjse9J-4k=/580x326/center/middle/https%3A%2F%2Fwww.abc.net.au%2Ftriplej%2Falbums%2Fandersonpaak-malibu.jpg",
+                  "width": 580,
+                  "height": 326,
+                  "aspect_ratio": "16x9"
+                }
+              ]
+            }
+          ],
+          "links": [],
+          "artists": [
+            {
+              "entity": "Artist",
+              "arid": "mave0bkZ5G",
+              "name": "Anderson .Paak",
+              "artwork": [],
+              "links": [],
+              "is_australian": null,
+              "type": "primary",
+              "role": null
+            }
+          ],
+          "record_label": null,
+          "release_year": "2016",
+          "release_album_id": "54449"
+        }
+      ],
+      "artwork": [],
+      "links": []
+    },
+    "release": {
+      "entity": "Release",
+      "arid": "mrKyQBYoX9",
+      "title": "Malibu",
+      "format": null,
+      "artwork": [
+        {
+          "entity": "Artwork",
+          "arid": "miW9735B9G",
+          "url": "https://www.abc.net.au/triplej/albums/54449/covers/original.jpg",
+          "type": "cover",
+          "title": null,
+          "mini_synopsis": null,
+          "short_synopsis": null,
+          "medium_synopsis": null,
+          "width": 750,
+          "height": 750,
+          "sizes": [
+            {
+              "url": "https://resize.abcradio.net.au/oTUjxgjXf9T1hQu7pW4-1_EZjdE=/100x100/center/middle/https%3A%2F%2Fwww.abc.net.au%2Ftriplej%2Falbums%2F54449%2Fcovers%2Foriginal.jpg",
+              "width": 100,
+              "height": 100,
+              "aspect_ratio": "1x1"
+            },
+            {
+              "url": "https://resize.abcradio.net.au/r_mdGJ1WsUpYb0szjCQGYeyIHwU=/160x160/center/middle/https%3A%2F%2Fwww.abc.net.au%2Ftriplej%2Falbums%2F54449%2Fcovers%2Foriginal.jpg",
+              "width": 160,
+              "height": 160,
+              "aspect_ratio": "1x1"
+            },
+            {
+              "url": "https://resize.abcradio.net.au/EXdEODAfqMdjjSL7K5NIPkuTIn4=/340x340/center/middle/https%3A%2F%2Fwww.abc.net.au%2Ftriplej%2Falbums%2F54449%2Fcovers%2Foriginal.jpg",
+              "width": 340,
+              "height": 340,
+              "aspect_ratio": "1x1"
+            },
+            {
+              "url": "https://resize.abcradio.net.au/4kvpC-1sAJ8KmOulKOciqRQdapw=/580x580/center/middle/https%3A%2F%2Fwww.abc.net.au%2Ftriplej%2Falbums%2F54449%2Fcovers%2Foriginal.jpg",
+              "width": 580,
+              "height": 580,
+              "aspect_ratio": "1x1"
+            },
+            {
+              "url": "https://resize.abcradio.net.au/mDwUFIoI_N3zZrtdDd07dH_Fu4I=/100x75/center/middle/https%3A%2F%2Fwww.abc.net.au%2Ftriplej%2Falbums%2F54449%2Fcovers%2Foriginal.jpg",
+              "width": 100,
+              "height": 75,
+              "aspect_ratio": "4x3"
+            },
+            {
+              "url": "https://resize.abcradio.net.au/b19MoaZz3q1RfIZHh1-ALgKTjNc=/160x120/center/middle/https%3A%2F%2Fwww.abc.net.au%2Ftriplej%2Falbums%2F54449%2Fcovers%2Foriginal.jpg",
+              "width": 160,
+              "height": 120,
+              "aspect_ratio": "4x3"
+            },
+            {
+              "url": "https://resize.abcradio.net.au/y0nBm1_4rG1hrUUKbLKebE-eVTQ=/220x124/center/middle/https%3A%2F%2Fwww.abc.net.au%2Ftriplej%2Falbums%2F54449%2Fcovers%2Foriginal.jpg",
+              "width": 220,
+              "height": 124,
+              "aspect_ratio": "16x9"
+            },
+            {
+              "url": "https://resize.abcradio.net.au/-A7vAnAEQ1rGPetfkGxrQjmPUPM=/580x326/center/middle/https%3A%2F%2Fwww.abc.net.au%2Ftriplej%2Falbums%2F54449%2Fcovers%2Foriginal.jpg",
+              "width": 580,
+              "height": 326,
+              "aspect_ratio": "16x9"
+            }
+          ]
+        },
+        {
+          "entity": "Artwork",
+          "arid": "miKexo3Jr9",
+          "url": "https://www.abc.net.au/dig/covers/original/paak_malibu.jpg",
+          "type": "cover",
+          "title": null,
+          "mini_synopsis": null,
+          "short_synopsis": null,
+          "medium_synopsis": null,
+          "width": 750,
+          "height": 750,
+          "sizes": [
+            {
+              "url": "https://resize.abcradio.net.au/hhGsOF2wqCYhh5_MifXVqWY4OtY=/100x100/center/middle/https%3A%2F%2Fwww.abc.net.au%2Fdig%2Fcovers%2Foriginal%2Fpaak_malibu.jpg",
+              "width": 100,
+              "height": 100,
+              "aspect_ratio": "1x1"
+            },
+            {
+              "url": "https://resize.abcradio.net.au/3XiLEwJbL2ufxcepvyY9MemDTlk=/160x160/center/middle/https%3A%2F%2Fwww.abc.net.au%2Fdig%2Fcovers%2Foriginal%2Fpaak_malibu.jpg",
+              "width": 160,
+              "height": 160,
+              "aspect_ratio": "1x1"
+            },
+            {
+              "url": "https://resize.abcradio.net.au/jkulfR0cnBpLroTVwsizQiskCU4=/340x340/center/middle/https%3A%2F%2Fwww.abc.net.au%2Fdig%2Fcovers%2Foriginal%2Fpaak_malibu.jpg",
+              "width": 340,
+              "height": 340,
+              "aspect_ratio": "1x1"
+            },
+            {
+              "url": "https://resize.abcradio.net.au/BYqlGMeDf4yQX8zaz8Vx1RH9tWE=/580x580/center/middle/https%3A%2F%2Fwww.abc.net.au%2Fdig%2Fcovers%2Foriginal%2Fpaak_malibu.jpg",
+              "width": 580,
+              "height": 580,
+              "aspect_ratio": "1x1"
+            },
+            {
+              "url": "https://resize.abcradio.net.au/usSZdIsEs-QG50s8RXhCkHLBStI=/100x75/center/middle/https%3A%2F%2Fwww.abc.net.au%2Fdig%2Fcovers%2Foriginal%2Fpaak_malibu.jpg",
+              "width": 100,
+              "height": 75,
+              "aspect_ratio": "4x3"
+            },
+            {
+              "url": "https://resize.abcradio.net.au/SaH_Kq1lSxfvQELBauov5CbWFgE=/160x120/center/middle/https%3A%2F%2Fwww.abc.net.au%2Fdig%2Fcovers%2Foriginal%2Fpaak_malibu.jpg",
+              "width": 160,
+              "height": 120,
+              "aspect_ratio": "4x3"
+            },
+            {
+              "url": "https://resize.abcradio.net.au/xW1maDgBunHYPYQxutEB2yXltSU=/220x124/center/middle/https%3A%2F%2Fwww.abc.net.au%2Fdig%2Fcovers%2Foriginal%2Fpaak_malibu.jpg",
+              "width": 220,
+              "height": 124,
+              "aspect_ratio": "16x9"
+            },
+            {
+              "url": "https://resize.abcradio.net.au/RFcP3OiOUEBK2XVgHaBefT-6J6w=/580x326/center/middle/https%3A%2F%2Fwww.abc.net.au%2Fdig%2Fcovers%2Foriginal%2Fpaak_malibu.jpg",
+              "width": 580,
+              "height": 326,
+              "aspect_ratio": "16x9"
+            }
+          ]
+        },
+        {
+          "entity": "Artwork",
+          "arid": "mi7eM2rKpP",
+          "url": "https://www.abc.net.au/triplej/albums/andersonpaak-malibu.jpg",
+          "type": "cover",
+          "title": null,
+          "mini_synopsis": null,
+          "short_synopsis": null,
+          "medium_synopsis": null,
+          "width": 750,
+          "height": 750,
+          "sizes": [
+            {
+              "url": "https://resize.abcradio.net.au/p7Op3pLzAoj2WkmgFaQMhJVgRQI=/100x100/center/middle/https%3A%2F%2Fwww.abc.net.au%2Ftriplej%2Falbums%2Fandersonpaak-malibu.jpg",
+              "width": 100,
+              "height": 100,
+              "aspect_ratio": "1x1"
+            },
+            {
+              "url": "https://resize.abcradio.net.au/s9L_ZE3_92_2cL_hiy3DGF5sCHQ=/160x160/center/middle/https%3A%2F%2Fwww.abc.net.au%2Ftriplej%2Falbums%2Fandersonpaak-malibu.jpg",
+              "width": 160,
+              "height": 160,
+              "aspect_ratio": "1x1"
+            },
+            {
+              "url": "https://resize.abcradio.net.au/0kJvA3_1eetbKP8PmF_YN8RlOzs=/340x340/center/middle/https%3A%2F%2Fwww.abc.net.au%2Ftriplej%2Falbums%2Fandersonpaak-malibu.jpg",
+              "width": 340,
+              "height": 340,
+              "aspect_ratio": "1x1"
+            },
+            {
+              "url": "https://resize.abcradio.net.au/rBOIbZ20DIZlnlnLaTloN1UFCFQ=/580x580/center/middle/https%3A%2F%2Fwww.abc.net.au%2Ftriplej%2Falbums%2Fandersonpaak-malibu.jpg",
+              "width": 580,
+              "height": 580,
+              "aspect_ratio": "1x1"
+            },
+            {
+              "url": "https://resize.abcradio.net.au/3yeLEek2XhGwZv6p3jeHePzLtXA=/100x75/center/middle/https%3A%2F%2Fwww.abc.net.au%2Ftriplej%2Falbums%2Fandersonpaak-malibu.jpg",
+              "width": 100,
+              "height": 75,
+              "aspect_ratio": "4x3"
+            },
+            {
+              "url": "https://resize.abcradio.net.au/diLOYwNfknG8dHib1mJ4wQIcDoo=/160x120/center/middle/https%3A%2F%2Fwww.abc.net.au%2Ftriplej%2Falbums%2Fandersonpaak-malibu.jpg",
+              "width": 160,
+              "height": 120,
+              "aspect_ratio": "4x3"
+            },
+            {
+              "url": "https://resize.abcradio.net.au/LQFNLwi32vQrqySBhITaa12gO_Y=/220x124/center/middle/https%3A%2F%2Fwww.abc.net.au%2Ftriplej%2Falbums%2Fandersonpaak-malibu.jpg",
+              "width": 220,
+              "height": 124,
+              "aspect_ratio": "16x9"
+            },
+            {
+              "url": "https://resize.abcradio.net.au/4Y-8TZCCQ3VEIFzyEigjse9J-4k=/580x326/center/middle/https%3A%2F%2Fwww.abc.net.au%2Ftriplej%2Falbums%2Fandersonpaak-malibu.jpg",
+              "width": 580,
+              "height": 326,
+              "aspect_ratio": "16x9"
+            }
+          ]
+        }
+      ],
+      "links": [],
+      "artists": [
+        {
+          "entity": "Artist",
+          "arid": "mave0bkZ5G",
+          "name": "Anderson .Paak",
+          "artwork": [],
+          "links": [],
+          "is_australian": null,
+          "type": "primary",
+          "role": null
+        }
+      ],
+      "record_label": null,
+      "release_year": "2016",
+      "release_album_id": "54449"
+    }
+  }
+}
