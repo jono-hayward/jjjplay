@@ -30,8 +30,26 @@ const parse = song => ({
 });
 
 if ( now.now && now.now.recording ) {
-  console.log( 'Now', parse( now.now ) );
+  const song = parse( now.now );
+  console.log( 'Now', song );
+
+  const agent = new BskyAgent({ service: "https://bsky.social" });
+  await agent.login({
+    identifier: config.username,
+    password: config.password,
+  });
+
+  await agent.post({
+    text:
+`🎵 ${song.title}
+🧑‍🎤 ${song.artist}
+💿 ${song.album}
+
+🕑 ${song.started}`
+  })
 }
+
 if ( now.prev && now.prev.recording ) {
   console.log( 'Prev', parse ( now.prev ) );
 }
+
