@@ -21,16 +21,17 @@ const timeOptions = {
 
 let now = await scrape();
 
-if ( now.now && now.now.recording ) {
-  const song = {
-    started: new Date(now.now.played_time).toLocaleTimeString('en-AU', timeOptions),
-    title: now.now.recording.title,
-    artist: now.now.recording.artists[0].name,
-    album: now.now.release.title,
-    artwork: now.now.release.artwork[0].url
-  };
+const parse = song => ({
+  started: new Date(song.played_time).toLocaleTimeString('en-AU', timeOptions),
+  title: song.recording.title,
+  artist: song.recording.artists[0].name,
+  album: song.release.title,
+  artwork: song.release.artwork[0].url
+});
 
-  console.log( song );
-} else {
-  console.log( now );
+if ( now.now && now.now.recording ) {
+  console.log( 'Now', parse( now.now ) );
+}
+if ( now.prev && now.prev.recording ) {
+  console.log( 'Prev', parse ( now.prev ) );
 }
