@@ -3,6 +3,8 @@ import 'dotenv/config';
 import agent from '@atproto/api';
 const { BskyAgent, RichText } = agent;
 
+import { clockEmoji } from './helpers.js';
+
 
 const config = {
   username: process.env.username,
@@ -22,7 +24,7 @@ const timeOptions = {
 let now = await scrape();
 
 const parse = song => ({
-  started: new Date(song.played_time).toLocaleTimeString('en-AU', timeOptions),
+  started: song.played_time,
   title: song.recording.title,
   artist: song.recording.artists[0].name,
   album: song.release.title,
@@ -45,7 +47,7 @@ if ( now.now && now.now.recording ) {
 🧑‍🎤 ${song.artist}
 💿 ${song.album}
 
-🕑 ${song.started}`
+${clockEmoji( config.timezone, song.started )} ${new Date( song.started ).toLocaleTimeString( 'en-AU', timeOptions )}`
   })
 }
 
