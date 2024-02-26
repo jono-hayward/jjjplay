@@ -10,8 +10,10 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "devDependencies": {
+  "dependencies": {
     "@atproto/api": "^0.9.7",
-    "dotenv": "^16.4.4"
+    "dotenv": "^16.4.4",
+    "spotify-web-api-node": "^5.0.2",
+    "youtube-music-api": "^1.0.6"
   }
 }

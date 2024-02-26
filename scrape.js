@@ -1,10 +1,9 @@
 import 'dotenv/config';
-import agent from '@atproto/api';
-const { BskyAgent, RichText } = agent;
+import BSky from '@atproto/api';
+const { BskyAgent, RichText } = BSky;
 
-import * as fs from 'fs';
 
-import { clockEmoji, parse } from './helpers.js';
+import { clockEmoji, parse, searchAppleMusic, searchSpotify, searchYouTube } from './helpers.js';
 
 const config = {
   username: process.env.username,
@@ -12,40 +11,97 @@ const config = {
   timezone: process.env.timezone,
 };
 
-const API = `https://music.abcradio.net.au/api/v1/plays/triplej/now.json?tz=${config.timezone}`;
-
-const scrape = async () => fetch( API ).then( response => response.json() );
-
 const timeOptions = {
   timeStyle: 'short',
   timeZone: config.timezone,
 };
 
-let now = await scrape();
+const API = `https://music.abcradio.net.au/api/v1/plays/triplej/now.json?tz=${config.timezone}`;
+const scrape = async () => fetch( API ).then( response => response.json() );
 
-if ( now.now && now.now.recording ) {
+const playing = await scrape();
 
-  const song = parse( now.now );
-  console.log( 'Now', song );
 
-  const agent = new BskyAgent({ service: "https://bsky.social" });
-  await agent.login({
-    identifier: config.username,
-    password: config.password,
-  });
+if ( playing.now && playing.now.recording ) {
+
+  const song = parse( playing.now );
+
+  console.log( 'Now playing', song );
 
   const songDate = new Date( song.started );
 
   const postObject = {
     langs: ['en-AU', 'en'],
     createdAt: songDate.toISOString(),
-    text: 
-`🎵 ${song.title}
-🧑‍🎤 ${song.artist}
-💿 ${song.album}
-
-${clockEmoji( config.timezone, song.started )} ${songDate.toLocaleTimeString( 'en-AU', timeOptions )}`,
   };
+
+  const lines = [
+    song.title,
+    `by ${song.artist}`,
+  ];
+
+  if ( song.album !== song.title ) {
+    lines.push( `from ${song.album}` );
+  }
+  // `${clockEmoji( config.timezone, song.started )} ${songDate.toLocaleTimeString( 'en-AU', timeOptions )}`,
+
+  const streamingLinks = [];
+
+  const appleMusic = await searchAppleMusic( song );
+  appleMusic && streamingLinks.push({
+    service: 'Apple Music',
+    url: appleMusic,
+  });
+
+  const spotify = await searchSpotify( song );
+  spotify && streamingLinks.push({
+    service: 'Spotify',
+    url: spotify,
+  });
+
+  const yt = await searchYouTube( song );
+  yt && streamingLinks.push({
+    service: 'YouTube Music',
+    url: yt,
+  });
+
+  streamingLinks.length && lines.push(
+    ``,
+    `${streamingLinks.map( service => service.service ).join(' / ')}`
+  );
+  
+  const agent = new BskyAgent({ service: "https://bsky.social" });
+  await agent.login({
+    identifier: config.username,
+    password: config.password,
+  });
+
+  const rt = new RichText({ text: lines.join('\n') });
+
+  for ( const stream of streamingLinks ) {
+
+    const serviceName = new RichText({ text: stream.service });
+
+    const start = rt.text.search( serviceName.text );
+    const end = start + serviceName.length;
+
+    if (!postObject.facets) {
+      postObject.facets = [];
+    }
+
+    postObject.facets.push({
+      index: {
+        byteStart: start,
+        byteEnd: end
+      },
+      features: [{
+        $type: 'app.bsky.richtext.facet#link',
+        uri: stream.url
+      }]
+    });
+  }
+
+  postObject.text = rt.text;
 
   if ( song.artwork ) {
 
@@ -69,6 +125,7 @@ ${clockEmoji( config.timezone, song.started )} ${songDate.toLocaleTimeString( 'e
   }
 
   await agent.post( postObject );
+
 } else {
   console.log( 'No song currently playing' );
 }
