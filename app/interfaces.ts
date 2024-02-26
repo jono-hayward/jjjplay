@@ -1,5 +1,5 @@
 export type song = {
-  started: string,
+  started?: string,
   title: string;
   artist: string;
   album?: string;
