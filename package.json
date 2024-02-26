@@ -1,19 +1,27 @@
 {
   "name": "jjjplay",
-  "version": "1.0.0",
-  "description": "An unofficial revival of the Triple J Plays Twitter account on Bluesky (and others later maybe)",
-  "main": "scrape.js",
-  "type": "module",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "@atproto/api": "^0.9.7",
-    "dotenv": "^16.4.4",
+    "@atproto/api": "^0.10.1",
+    "next": "14.1.0",
+    "react": "^18",
+    "react-dom": "^18",
     "spotify-web-api-node": "^5.0.2",
     "youtube-music-api": "^1.0.6"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "14.1.0",
+    "typescript": "^5"
   }
 }
