@@ -1,3 +1,12 @@
+export const parse = song => ({
+  started: song.played_time,
+  title: song.recording.title,
+  artist: song.recording.artists[0].name,
+  album: song.release.title,
+  artwork: song.release.artwork[0].sizes[3].url || ''
+});
+
+
 export const clockEmoji = (timezone, time) => {
   
   const options = { timeZone: timezone };

@@ -1,10 +1,10 @@
 import 'dotenv/config';
-
 import agent from '@atproto/api';
 const { BskyAgent, RichText } = agent;
 
-import { clockEmoji } from './helpers.js';
+import * as fs from 'fs';
 
+import { clockEmoji, parse } from './helpers.js';
 
 const config = {
   username: process.env.username,
@@ -23,15 +23,8 @@ const timeOptions = {
 
 let now = await scrape();
 
-const parse = song => ({
-  started: song.played_time,
-  title: song.recording.title,
-  artist: song.recording.artists[0].name,
-  album: song.release.title,
-  artwork: song.release.artwork[0].url
-});
-
 if ( now.now && now.now.recording ) {
+
   const song = parse( now.now );
   console.log( 'Now', song );
 
@@ -41,17 +34,41 @@ if ( now.now && now.now.recording ) {
     password: config.password,
   });
 
-  await agent.post({
-    text:
+  const songDate = new Date( song.started );
+
+  const postObject = {
+    langs: ['en-AU', 'en'],
+    createdAt: songDate.toISOString(),
+    text: 
 `🎵 ${song.title}
 🧑‍🎤 ${song.artist}
 💿 ${song.album}
 
-${clockEmoji( config.timezone, song.started )} ${new Date( song.started ).toLocaleTimeString( 'en-AU', timeOptions )}`
-  })
-}
+${clockEmoji( config.timezone, song.started )} ${songDate.toLocaleTimeString( 'en-AU', timeOptions )}`,
+  };
 
-if ( now.prev && now.prev.recording ) {
-  console.log( 'Prev', parse ( now.prev ) );
-}
+  if ( song.artwork ) {
 
+    const response = await fetch( song.artwork );
+
+    const buffer = await response.arrayBuffer();
+
+    const { data } = await agent.uploadBlob( new Uint8Array( buffer ), { encoding: 'image/jpeg' } );
+
+    postObject.embed = {
+      $type: 'app.bsky.embed.images',
+      images: [{
+        alt: `Album artwork for "${song.album}" by ${song.artist}`,
+        image: data.blob,
+        aspectRatio: {
+          width: 1,
+          height: 1,
+        }
+      }]
+    };
+  }
+
+  await agent.post( postObject );
+} else {
+  console.log( 'No song currently playing' );
+}
