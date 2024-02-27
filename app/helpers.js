@@ -1,11 +1,8 @@
-import type { song } from './interfaces';
-
 import SpotifyWebApi from 'spotify-web-api-node';
-
 import YouTubeMusicAPI from 'youtube-music-api';
 
-export const parse = (song: any) => {
-  const result:song = {
+export const parse = song => {
+  const result = {
     started: song.played_time,
     title: song.recording.title,
     artist: song.recording.artists[0].name,
@@ -33,20 +30,20 @@ export const parse = (song: any) => {
   return result;
 };
 
-const sanitise_song = (song: string) => song
+const sanitise_song = song => song
   .replace( 'ft. ', '' );
   
-const sanitise_artist = (artist: string) => artist
+const sanitise_artist = artist => artist
   .replace( ' x ', '' )
   .replace( ' X ', '' )
   .replace( ' + ', '' )
   .replace( ' & ', '' );
 
-export const searchAppleMusic = async (song: song) => {
+export const searchAppleMusic = async song => {
 
   const base = 'https://itunes.apple.com/search';
 
-  const p:any = {
+  const p = {
     limit: 1,
     country: 'AU',
     media: 'music',
@@ -54,7 +51,7 @@ export const searchAppleMusic = async (song: song) => {
     term: `${sanitise_song( song.title )} ${sanitise_artist( song.artist )}`,
   }
 
-  const params = new URLSearchParams(p);
+  const params = new URLSearchParams( p );
 
   const url = `${base}?${params.toString()}`;
 
@@ -68,7 +65,7 @@ export const searchAppleMusic = async (song: song) => {
   return false;
 };
 
-export const searchSpotify = async (song: song) => {
+export const searchSpotify = async song => {
 
   var spotifyApi = new SpotifyWebApi({
     clientId: process.env.spotify_client,
@@ -77,8 +74,8 @@ export const searchSpotify = async (song: song) => {
   
   // Retrieve an access token.
   await spotifyApi.clientCredentialsGrant().then(
-    (data: any) => spotifyApi.setAccessToken(data.body['access_token']),
-    (err: any) =>  console.log('Something went wrong when retrieving an access token', err)
+    data => spotifyApi.setAccessToken(data.body['access_token']),
+    err  => console.log('Something went wrong when retrieving an access token', err)
   );
 
   const result = await spotifyApi.searchTracks( `track:${sanitise_song( song.title )} artist:${sanitise_artist( song.artist )}`, {
@@ -94,7 +91,7 @@ export const searchSpotify = async (song: song) => {
   return false;
 };
 
-export const searchYouTube = async (song: song) => {
+export const searchYouTube = async song => {
 
   const yt = new YouTubeMusicAPI();
   await yt.initalize();

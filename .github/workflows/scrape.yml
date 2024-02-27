@@ -1,0 +1,12 @@
+name: scrape-and-post
+run-name: Scrape and post
+
+on:
+  schedule:
+    - cron: "*/1.5 * * * *"
+    
+jobs:
+   scrape:
+     runs-on: ubuntu-latest
+     steps:
+       
