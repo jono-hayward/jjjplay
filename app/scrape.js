@@ -11,6 +11,8 @@ const config = {
   timezone: process.env.timezone,
 };
 
+console.log( config );
+
 const timeOptions = {
   timeStyle: 'short',
   timeZone: config.timezone,
@@ -26,7 +28,7 @@ const playing = await scrape();
 
 
 // Bail out now if there's nothing playing
-if ( !playing.now ) {
+if ( !playing.now || !playing.now.recording ) {
   console.error( 'No song currently playing' );
   process.exit(0);
 }
