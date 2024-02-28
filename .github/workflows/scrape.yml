@@ -1,8 +1,6 @@
 name: scrape-and-post
 run-name: Scrape and post
 
-environment: production
-
 on:
   - push
 
@@ -10,16 +8,18 @@ on:
 #  schedule:
 #    - cron: "*/1.5 * * * *"
 
-env:
-  USERNAME: ${{ secrets.USERNAME }}
-  PASSWORD: ${{ secrets.PASSWORD }}
-  TIMEZONE: ${{ vars.TIMEZONE }}
-  SPOTIFY_CLIENT: ${{ secrets.SPOTIFY_CLIENT }}
-  SPOTIFY_SECRET: ${{ secrets.SPOTIFY_SECRET }}
     
 jobs:
   scrape:
     runs-on: ubuntu-latest
+    environment: production
+    
+    env:
+      USERNAME: ${{ secrets.USERNAME }}
+      PASSWORD: ${{ secrets.PASSWORD }}
+      TIMEZONE: ${{ vars.TIMEZONE }}
+      SPOTIFY_CLIENT: ${{ secrets.SPOTIFY_CLIENT }}
+      SPOTIFY_SECRET: ${{ secrets.SPOTIFY_SECRET }}
      
     steps:
       - name: Check out code
