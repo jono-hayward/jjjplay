@@ -70,8 +70,8 @@ export const searchAppleMusic = async song => {
 export const searchSpotify = async song => {
 
   var spotifyApi = new SpotifyWebApi({
-    clientId: process.env.spotify_client,
-    clientSecret: process.env.spotify_secret,
+    clientId: process.env.SPOTIFY_CLIENT,
+    clientSecret: process.env.SPOTIFY_SECRET,
   });
   
   // Retrieve an access token.

@@ -17,19 +17,13 @@ jobs:
         uses: actions/checkout@v4
         
       - name: Create .env
-        run: |
-          touch .env
-          
-          echo username=${{ secrets.USERNAME }} >> .env
-          echo password=${{ secrets.PASSWORD }} >> .env
-          
-          echo timezone=${{ vars.TIMEZONE }} >> .env
-          
-          echo spotify_client=${{ secrets.SPOTIFY_CLIENT }} >> .env
-          echo spotify_secret=${{ secrets.SPOTIFY_SECRET }} >> .env
-          cat .env
-          
-        shell: bash
+        uses: ozaytsev86/create-env-file-action@v1
+          with:
+            ENV_USERNAME: ${{ secrets.USERNAME }}
+            ENV_PASSWORD: ${{ secrets.PASSWORD }}
+            ENV_TIMEZONE: ${{ vars.TIMEZONE }}
+            ENV_SPOTIFY_CLIENT: ${{ secrets.SPOTIFY_CLIENT }}
+            ENV_SPOTIFY_SECRET: ${{ secrets.SPOTIFY_SECRET }}
         
       - name: Install node
         uses: actions/setup-node@v4

@@ -1,7 +1,7 @@
 import 'dotenv/config';
 
 const config = {
-  timezone: process.env.timezone,
+  timezone: process.env.TIMEZONE,
 };
 
 const API = `https://music.abcradio.net.au/api/v1/plays/triplej/now.json?tz=${config.timezone}`;

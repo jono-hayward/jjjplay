@@ -6,9 +6,9 @@ import pkg from '@atproto/api';
 const { BskyAgent, RichText } = pkg;
 
 const config = {
-  username: process.env.username,
-  password: process.env.password,
-  timezone: process.env.timezone,
+  username: process.env.USERNAME,
+  password: process.env.PASSWORD,
+  timezone: process.env.TIMEZONE,
 };
 
 console.log( config );
