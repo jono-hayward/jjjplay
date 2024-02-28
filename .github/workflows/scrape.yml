@@ -18,12 +18,12 @@ jobs:
         
       - name: Create .env
         uses: ozaytsev86/create-env-file-action@v1
-          with:
-            ENV_USERNAME: ${{ secrets.USERNAME }}
-            ENV_PASSWORD: ${{ secrets.PASSWORD }}
-            ENV_TIMEZONE: ${{ vars.TIMEZONE }}
-            ENV_SPOTIFY_CLIENT: ${{ secrets.SPOTIFY_CLIENT }}
-            ENV_SPOTIFY_SECRET: ${{ secrets.SPOTIFY_SECRET }}
+        with:
+          ENV_USERNAME: ${{ secrets.USERNAME }}
+          ENV_PASSWORD: ${{ secrets.PASSWORD }}
+          ENV_TIMEZONE: ${{ vars.TIMEZONE }}
+          ENV_SPOTIFY_CLIENT: ${{ secrets.SPOTIFY_CLIENT }}
+          ENV_SPOTIFY_SECRET: ${{ secrets.SPOTIFY_SECRET }}
         
       - name: Install node
         uses: actions/setup-node@v4
