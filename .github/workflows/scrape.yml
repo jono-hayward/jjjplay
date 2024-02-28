@@ -1,12 +1,57 @@
 name: scrape-and-post
 run-name: Scrape and post
 
-on:
-  schedule:
-    - cron: "*/1.5 * * * *"
+#on:
+#  schedule:
+#    - cron: "*/1.5 * * * *"
     
 jobs:
-   scrape:
-     runs-on: ubuntu-latest
-     steps:
-       
+  scrape:
+    runs-on: ubuntu-latest
+     
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+        
+      - name: Create .env
+        run: |
+          touch .env
+          
+          echo username=${{ secrets.USERNAME }} >> .env
+          echo password=${{ secrets.PASSWORD }} >> .env
+          
+          echo timezone=${{ vars.TIMEZONE }} >> .env
+          
+          echo spotify_client=${{ secrets.SPOTIFY_CLIENT }} >> .env
+          echo spotify_secret=${{ secrets.SPOTIFY_SECRET }} >> .env
+        shell: bash
+        
+      - name: Install node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+        
+      - uses: pnpm/action-setup@v3
+        name: Install pnpm
+        with:
+          version: 8
+          run_install: false
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install   
+        
+      - name: Scrape!
+        run: pnpm scrape  

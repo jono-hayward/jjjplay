@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "scripts": {
+    "scrape": "node app/scrape.js"
+  },
   "dependencies": {
     "@atproto/api": "^0.10.1",
     "dotenv": "^16.4.5",
