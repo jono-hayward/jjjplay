@@ -27,6 +27,7 @@ jobs:
           
           echo spotify_client=${{ secrets.SPOTIFY_CLIENT }} >> .env
           echo spotify_secret=${{ secrets.SPOTIFY_SECRET }} >> .env
+        cat .env
         shell: bash
         
       - name: Install node

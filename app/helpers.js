@@ -1,3 +1,5 @@
+import 'dotenv/config';
+
 import SpotifyWebApi from 'spotify-web-api-node';
 import YouTubeMusicAPI from 'youtube-music-api';
 
