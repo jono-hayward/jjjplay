@@ -34,14 +34,8 @@ export const parse = song => {
 
 const sanitise_song = song => song
   .replace( 'ft. ', '' );
-  
-const sanitise_artist = artist => artist
-  .replace( ' x ', '' )
-  .replace( ' X ', '' )
-  .replace( ' + ', '' )
-  .replace( ' & ', '' );
 
-export const searchAppleMusic = async song => {
+export const searchAppleMusic = async (song, debug=false) => {
 
   const base = 'https://itunes.apple.com/search';
 
@@ -50,7 +44,7 @@ export const searchAppleMusic = async song => {
     country: 'AU',
     media: 'music',
     entity: 'musicTrack',
-    term: `${sanitise_song( song.title )} ${sanitise_artist( song.artist )}`,
+    term: `${sanitise_song( song.title )} ${song.artist}`,
   }
 
   const params = new URLSearchParams( p );
@@ -59,6 +53,8 @@ export const searchAppleMusic = async song => {
 
   const response = await fetch( url );
   const results = await response.json();
+  
+  debug && console.log( 'Raw Apple Music results', results );
 
   if ( results.resultCount ) {
     return results.results[0].trackViewUrl;
@@ -67,7 +63,7 @@ export const searchAppleMusic = async song => {
   return false;
 };
 
-export const searchSpotify = async song => {
+export const searchSpotify = async (song, debug=false) => {
 
   var spotifyApi = new SpotifyWebApi({
     clientId: process.env.SPOTIFY_CLIENT,
@@ -80,11 +76,13 @@ export const searchSpotify = async song => {
     err  => console.log('Something went wrong when retrieving an access token', err)
   );
 
-  const result = await spotifyApi.searchTracks( `track:${sanitise_song( song.title )} artist:${sanitise_artist( song.artist )}`, {
+  const result = await spotifyApi.searchTracks( `track:${sanitise_song( song.title )} artist:${song.artist}`, {
     limit: 1,
     country: 'AU',
     type: 'track',
   } );
+  
+  debug && console.log( 'Raw Spotify results', result );
   
   if ( result.body.tracks && result.body.tracks.total ) {
     return result.body.tracks.items[0].external_urls.spotify;
@@ -93,13 +91,15 @@ export const searchSpotify = async song => {
   return false;
 };
 
-export const searchYouTube = async song => {
+export const searchYouTube = async (song, debug=false) => {
 
   const yt = new YouTubeMusicAPI();
   await yt.initalize();
   yt.ytcfg.VISITOR_DATA = '';
 
-  const result = await yt.search( `${sanitise_song( song.title )} ${sanitise_artist( song.artist )}`, 'song' );
+  const result = await yt.search( `${sanitise_song( song.title )} ${song.artist}`, 'song' );
+  
+  debug && console.log( 'Raw YouTube Music results', result );
 
   if ( result.content ) {
     return `https://music.youtube.com/watch?v=${result.content[0].videoId}`;

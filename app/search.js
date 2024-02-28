@@ -1,6 +1,21 @@
-import { searchAppleMusic } from "../../app/helpers";
+import { searchAppleMusic, searchSpotify, searchYouTube } from "./helpers.js";
 
-console.log( await searchAppleMusic( {
-  title: 'Pretend (A$AP Rocky)',
-  artist: 'Tinashe',
-} ) );
+const search = {
+  title: 'The Trouble With Us',
+  artist: 'Marcus Marr & Chet Faker'
+};
+
+console.table([
+  {
+    'Service': 'Apple Music',
+    'Result': await searchAppleMusic( search, true )
+  },
+  {
+    'Service': 'Spotify',
+    'Result': await searchSpotify( search, true )
+  },
+  {
+    'Service': 'YouTube Music',
+    'Result': await searchYouTube( search, true )
+  }
+]);
