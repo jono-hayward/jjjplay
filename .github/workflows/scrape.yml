@@ -1,6 +1,8 @@
 name: scrape-and-post
 run-name: Scrape and post
 
+environment: production
+
 on:
   - push
 
