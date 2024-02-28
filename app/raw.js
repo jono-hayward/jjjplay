@@ -1,3 +1,5 @@
+import 'dotenv/config';
+
 const config = {
   timezone: process.env.timezone,
 };

@@ -95,6 +95,7 @@ export const searchYouTube = async song => {
 
   const yt = new YouTubeMusicAPI();
   await yt.initalize();
+  yt.ytcfg.VISITOR_DATA = '';
 
   const result = await yt.search( `${sanitise_song( song.title )} ${sanitise_artist( song.artist )}`, 'song' );
 
