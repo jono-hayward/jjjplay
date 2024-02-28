@@ -26,7 +26,7 @@ jobs:
       - name: Create .env
         uses: CallePuzzle/envvar-to-dotenv-action@0.1.0
         with:
-          variableNamesByFilter: ^ENV_.*
+          variableNames: ENV_USERNAME,ENV_PASSWORD,ENV_TIMEZONE,ENV_SPOTIFY_CLIENT,ENV_SPOTIFY_SECRET
         
       - name: Install node
         uses: actions/setup-node@v4
