@@ -2,9 +2,8 @@ name: scrape-and-post
 run-name: Scrape and post
 
 on:
-  - push
-  - schedule:
-    - cron: "*/1.5 * * * *"
+  schedule:
+  - cron: "*/1.5 * * * *"
 
     
 jobs:
