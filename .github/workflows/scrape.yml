@@ -3,8 +3,8 @@ run-name: Scrape and post
 
 on:
   schedule:
-  - cron: "*/2 * * * *"
-  workflow_dispatch
+    - cron: '*/2 * * * *' # Run every two minutes
+  workflow_dispatch: # Manual run trigger
 
     
 jobs:
