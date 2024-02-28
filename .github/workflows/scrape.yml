@@ -3,7 +3,7 @@ run-name: Scrape and post
 
 on:
   schedule:
-  - cron: "*/1.5 * * * *"
+  - cron: "*/2 * * * *"
 
     
 jobs:
