@@ -9,11 +9,11 @@ on:
 #    - cron: "*/1.5 * * * *"
 
 env:
-  ENV_USERNAME: ${{ secrets.USERNAME }}
-  ENV_PASSWORD: ${{ secrets.PASSWORD }}
-  ENV_TIMEZONE: ${{ vars.TIMEZONE }}
-  ENV_SPOTIFY_CLIENT: ${{ secrets.SPOTIFY_CLIENT }}
-  ENV_SPOTIFY_SECRET: ${{ secrets.SPOTIFY_SECRET }}
+  USERNAME: ${{ secrets.USERNAME }}
+  PASSWORD: ${{ secrets.PASSWORD }}
+  TIMEZONE: ${{ vars.TIMEZONE }}
+  SPOTIFY_CLIENT: ${{ secrets.SPOTIFY_CLIENT }}
+  SPOTIFY_SECRET: ${{ secrets.SPOTIFY_SECRET }}
     
 jobs:
   scrape:
@@ -24,9 +24,7 @@ jobs:
         uses: actions/checkout@v4
         
       - name: Create .env
-        uses: CallePuzzle/envvar-to-dotenv-action@0.1.0
-        with:
-          variableNames: ENV_USERNAME,ENV_PASSWORD,ENV_TIMEZONE,ENV_SPOTIFY_CLIENT,ENV_SPOTIFY_SECRET
+        uses: iamsauravsharma/create-dotenv@v2.0.1
         
       - name: Install node
         uses: actions/setup-node@v4
