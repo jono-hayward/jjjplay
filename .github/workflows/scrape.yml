@@ -4,6 +4,7 @@ run-name: Scrape and post
 on:
   schedule:
   - cron: "*/2 * * * *"
+  workflow_dispatch
 
     
 jobs:
