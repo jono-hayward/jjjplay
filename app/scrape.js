@@ -1,6 +1,13 @@
 import 'dotenv/config';
 
-import { parse, searchAppleMusic, searchSpotify, searchYouTube } from './helpers.js';
+import {
+  parse,
+  findByteRange,
+  searchAppleMusic,
+  searchSpotify,
+  searchYouTube,
+  clockEmoji
+} from './helpers.js';
 
 import pkg from '@atproto/api';
 const { BskyAgent, RichText } = pkg;
@@ -26,13 +33,12 @@ const playing = await scrape();
 
 
 // Bail out now if there's nothing playing
-if ( !playing.now || !playing.now.recording ) {
-  console.error( 'No song currently playing' );
-  process.exit(0);
-}
+// if ( !playing.now || !playing.now.recording ) {
+//   console.error( 'No song currently playing' );
+//   process.exit(0);
+// }
 
-
-const song = parse( playing.now );
+const song = parse( playing.prev );
 console.log( 'Now playing', song );
 
 
@@ -44,14 +50,18 @@ const postObject = {
 };
 
 const lines = [
-  song.title,
-  `by ${song.artist}`,
+  `🎵 ${song.title}`,
+  `🧑‍🎤 ${song.artist}`,
 ];
 
 if ( song.album !== song.title ) {
-  lines.push( `from ${song.album}` );
+  lines.push( `💿 ${song.album}` );
 }
-// `${clockEmoji( config.timezone, song.started )} ${songDate.toLocaleTimeString( 'en-AU', timeOptions )}`,
+
+lines.push(
+  ``,
+  `${clockEmoji( config.timezone, song.started )} ${songDate.toLocaleTimeString( 'en-AU', timeOptions )}`,
+);
 
 const streamingLinks = [];
 
@@ -78,7 +88,7 @@ yt && streamingLinks.push({
 
 streamingLinks.length && lines.push(
   ``,
-  `${streamingLinks.map( service => service.service ).join(' / ')}`
+  `🎧 ${streamingLinks.map( service => service.service ).join(' / ')}`
 );
 
 console.log( 'Logging in to Bluesky' );
@@ -88,15 +98,14 @@ await agent.login({
   password: config.password,
 });
 
-const rt = new RichText({ text: lines.join('\n') });
+const rt = lines.join('\n');
 
 for ( const stream of streamingLinks ) {
 
-  const serviceName = new RichText({ text: stream.service });
+  const serviceName = stream.service;
 
-  const start = rt.text.search( serviceName.text );
-  const end = start + serviceName.length;
-
+  const { start, end } = findByteRange( rt, serviceName );
+  
   if ( !postObject.facets ) {
     postObject.facets = [];
   }
@@ -113,7 +122,7 @@ for ( const stream of streamingLinks ) {
   });
 }
 
-postObject.text = rt.text;
+postObject.text = rt;
 
 if ( song.artwork ) {
 
