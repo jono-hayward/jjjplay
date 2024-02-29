@@ -1,36 +1,26 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# JJJPlays
 
-## Getting Started
+This is a wholly unofficial and unauthorised recreation of the old TripleJPlays account from the bird site. Triple J stopped maintaining those accounts in 2021, and I've been missing it ever since. I always wanted to build a new version myself, but then Elon Musk happened and I had to get away from the bird site.
 
-First, run the development server:
+Now I'm very pleased to unveil my rebuilt version for Bluesky.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+This version is even an improvement over the old official one. Better text formatting, links to the song on streaming services, even album art. _Hot._
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tech
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The only dependencies I'm running:
+- [ATProto API](https://github.com/bluesky-social/atproto)
+- [Dotenv](https://github.com/motdotla/dotenv)
+- [spotify-web-api-node](https://github.com/thelinmichael/spotify-web-api-node)
+- [youtube-music-api](https://github.com/emresenyuva/youtube-music-api)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Known issues
+- [x] Facet detection can get wonky when the post text contains emoji or other special characters
+- [ ] The GitHub Actions workflow is supposed to run every two minutes, but is happening much less often than that due to free account low-priority-ness.
 
-## Learn More
+## Roadmap?
+- [ ] Currently just running one bot for the live Triple J feed on the east coast. I want to add bots for the other timezones, and Double J etc.
+- [ ] I'd like to expand this to also work on Mastodon and maybe even Threads.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
