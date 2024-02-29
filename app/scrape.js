@@ -32,7 +32,7 @@ const scrape = async () => fetch(API).then( response => response.json() );
 const playing = await scrape();
 
 
-Bail out now if there's nothing playing
+// Bail out now if there's nothing playing
 if ( !playing.now || !playing.now.recording ) {
   console.error( 'No song currently playing' );
   process.exit(0);
