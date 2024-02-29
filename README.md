@@ -13,12 +13,13 @@ The only dependencies I'm running:
 - [youtube-music-api](https://github.com/emresenyuva/youtube-music-api)
 
 ## Known issues
-- [x] ~Facet detection can get wonky when the post text contains emoji or other special characters~
+- [x] ~The links to streaming services can get a bit wonky when the post text contains emoji or other special characters~
 - [ ] The GitHub Actions workflow is supposed to run every two minutes, but is happening much less often than that due to free account low-priority-ness.
 - [ ] This depends on the internal API used by the ABC's live radio players. It updates regularly, but doesn't always show song details for whatever reason. Usually late at night it'll just stop giving any song info at all. Not much I can do about that sadly.
 
 ## Roadmap?
-- [ ] Currently just running one bot for the live Triple J feed on the east coast. I want to add bots for the other timezones, and Double J etc.
+- [ ] Spin up bots for Triple J in the other Australian time zones.
+- [ ] Spin up bots for Double J etc.
 - [ ] I'd like to expand this to also work on Mastodon and maybe even Threads.
 
 ## License
