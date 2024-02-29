@@ -15,7 +15,7 @@ The only dependencies I'm running:
 - [youtube-music-api](https://github.com/emresenyuva/youtube-music-api)
 
 ## Known issues
-- [x] Facet detection can get wonky when the post text contains emoji or other special characters
+- [x] ~Facet detection can get wonky when the post text contains emoji or other special characters~
 - [ ] The GitHub Actions workflow is supposed to run every two minutes, but is happening much less often than that due to free account low-priority-ness.
 
 ## Roadmap?
