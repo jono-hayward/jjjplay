@@ -88,7 +88,7 @@ streamingLinks.length && lines.push(
 
 
 // Begin talking to Bluesky
-console.log( 'Logging in to Bluesky' );
+console.log( '🪵 Logging in to Bluesky' );
 const agent = new BskyAgent({ service: "https://bsky.social" });
 await agent.login({
   identifier: config.username,
