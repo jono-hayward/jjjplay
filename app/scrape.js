@@ -43,6 +43,11 @@ const feed = await agent.getAuthorFeed({
 
 if ( feed && feed.data ) {
   latest = new Date( feed.data.cursor );
+  /* Doing the API query based on the exact time of the post seems to result in a possible duplicate
+   * Just offsetting by 30 seconds should get around that
+   */
+  
+  latest.setSeconds( latest.getSeconds() + 30 );
 } else {
   const now = new Date();
   now.setMinutes(now.getMinutes() - 10);
