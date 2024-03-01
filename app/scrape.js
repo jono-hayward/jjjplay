@@ -180,9 +180,9 @@ for ( const track of tracks.items ) {
         }
       }]
     };
-    console.log( ' ' );
   }
-
+  
+  console.log( ' ' );
   console.log( '🚀 Posting to Bluesky', postObject );
   await agent.post( postObject );
   console.log( '✅ Done!' );
