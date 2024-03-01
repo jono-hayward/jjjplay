@@ -83,7 +83,7 @@ for ( const track of tracks.items ) {
   const songDate = new Date( song.started );
 
   console.log( ' ' );
-  console.log( `🎵 Processing "${song.title} by ${song.artist}, played at ${songDate.toLocaleTimeString( 'en-AU', timeOptions )}` );
+  console.log( `🎵 Processing "${song.title}" by ${song.artist}, played at ${songDate.toLocaleTimeString( 'en-AU', timeOptions )}` );
 
   // Begin our bluesky post
   const postObject = {
