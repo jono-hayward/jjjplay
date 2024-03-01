@@ -40,14 +40,11 @@ if ( feed && feed.data ) {
 }
 console.log( `⌚️ Latest post was at ${latest.toLocaleTimeString( 'en-AU', timeOptions )}` );
 
-
-// const API = `https://music.abcradio.net.au/api/v1/plays/triplej/search.json?tz=${config.timezone}`;
 const stamp = latest.toISOString().replace('Z', '+00:00:00');
-const API = `https://music.abcradio.net.au/api/v1/plays/search.json?station=triplej&order=asc&tz=${config.timezone}&from=${encodeURIComponent(stamp)}`;
+const API = `https://music.abcradio.net.au/api/v1/plays/search.json?station=${station}&order=desc&tz=${config.timezone}&from=${encodeURIComponent(stamp)}`;
 console.log( 'Querying', API );
 
 const scrape = async () => fetch(API).then( response => response.json() );
-
 const tracks = await scrape();
 
 console.log( tracks );

@@ -16,6 +16,7 @@ const config = {
   bsky_handle:    process.env.BSKY_HANDLE,
   bsky_username:  process.env.BSKY_USERNAME,
   bsky_password:  process.env.BSKY_PASSWORD,
+  station:        process.env.STATION,
   timezone:       process.env.TIMEZONE,
 };
 
@@ -50,18 +51,16 @@ if ( feed && feed.data ) {
 console.log( `⌚️ Latest post was at ${latest.toLocaleTimeString( 'en-AU', timeOptions )}` );
 
 const params = new URLSearchParams( {
-  station: 'triplej',
+  station: config.station,
   order: 'desc', // We want them in descending order to always get the latest, even if for some reason there's more results than our limit
   tz: config.timezone,
-  from: latest.toISOString().replace('Z', '+00:00:00'),
+  from: latest.toISOString().replace('Z', '+00:00:00'), // Turn the ISO string into something the ABC API will accept
   limit: 10,
 } );
 
 const API = `https://music.abcradio.net.au/api/v1/plays/search.json?${params.toString()}`;
-console.log( 'Querying', API );
 
 const scrape = async () => fetch(API).then( response => response.json() );
-
 const tracks = await scrape();
 
 /**
