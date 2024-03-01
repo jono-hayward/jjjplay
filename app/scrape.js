@@ -35,7 +35,7 @@ const playing = await scrape();
 // Bail out now if there's nothing playing
 if ( !playing.now || !playing.now.recording ) {
   console.error( 'No song currently playing' );
-  console.log(`summary='**No song playing** so nothing was posted.' >> $GITHUB_OUTPUT`);
+  console.log(`echo "summary='**No song playing** so nothing was posted.'" >> $GITHUB_OUTPUT`);
   process.exit(0);
 }
 
@@ -148,7 +148,7 @@ if ( song.artwork ) {
 
 console.log( 'Posting', postObject );
 await agent.post( postObject );
-console.log(`summary='Posted: **${song.title}** by ${song.artist}' >> $GITHUB_OUTPUT`);
+console.log(`echo "summary='Posted: **${song.title}** by ${song.artist}'" >> $GITHUB_OUTPUT`);
 console.log( 'Done!' );
 
 process.exit(0);
