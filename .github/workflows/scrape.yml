@@ -54,4 +54,8 @@ jobs:
         run: pnpm install   
         
       - name: Scrape!
+        id: scrape
         run: pnpm scrape  
+
+      - name: Log summary
+        run: echo ${{ steps.scrape.outputs.summary }} >> $GITHUB_STEP_SUMMARY
