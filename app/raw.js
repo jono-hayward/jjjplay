@@ -10,4 +10,4 @@ const scrape = async () => fetch( API ).then( response => response.json() );
 
 const playing = await scrape();
 
-console.log( playing );
+console.log( playing.prev.recording.releases[0].artwork[0] );
