@@ -20,7 +20,7 @@ The only dependencies I'm running:
 
 ## Known issues
 - [x] ~The links to streaming services can get a bit wonky when the post text contains emoji or other special characters~
-- [ ] The GitHub Actions workflow is supposed to run every two minutes, but is happening much less often than that due to free account low-priority-ness. I may look at rewriting this to run less often (e.g. every ten minutes) but then post all the songs from that time period. It won't update as regularly, but thanks to the `createdAt` property, the posts will still appear at the same times the songs started.
+- [x] ~The GitHub Actions workflow is supposed to run every two minutes, but is happening much less often than that due to free account low-priority-ness. I may look at rewriting this to run less often (e.g. every ten minutes) but then post all the songs from that time period. It won't update as regularly, but thanks to the `createdAt` property, the posts will still appear at the same times the songs started.~
 - [ ] This depends on the internal API used by the ABC's live radio players. It updates regularly, but doesn't always show song details for whatever reason. Usually late at night it'll just stop giving any song info at all. Not much I can do about that sadly.
 
 ## Roadmap?
