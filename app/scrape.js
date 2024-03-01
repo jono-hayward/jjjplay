@@ -1,5 +1,4 @@
 import 'dotenv/config';
-import fs from 'fs';
 
 import {
   parse,
@@ -37,7 +36,7 @@ const playing = await scrape();
 if ( !playing.now || !playing.now.recording ) {
   console.error( 'No song currently playing' );
 
-  fs.writeFileSync(process.env.GITHUB_OUTPUT, "summary='**No song playing** so nothing was posted.'");
+  process.env.GITHUB_OUTPUT = "summary='**No song playing** so nothing was posted.'";
   process.exit(0);
 }
 
@@ -150,7 +149,7 @@ if ( song.artwork ) {
 
 console.log( 'Posting', postObject );
 await agent.post( postObject );
-fs.writeFileSync(process.env.GITHUB_OUTPUT, "summary='Posted: **${song.title}** by ${song.artist}'");
+process.env.GITHUB_OUTPUT = "summary='Posted: **${song.title}** by ${song.artist}'";
 console.log( 'Done!' );
 
 process.exit(0);
