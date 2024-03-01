@@ -31,7 +31,7 @@ const getImg = art => {
 
     for ( const img of art.sizes ) {
       if ( img.aspect_ratio === '1x1' && img.width <= 800 &&  ( !largest || img.width > largest.width ) ) {
-        largest = img;
+        largest = img.url;
       }
     }
 
