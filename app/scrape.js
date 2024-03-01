@@ -39,7 +39,7 @@ if ( !playing.now || !playing.now.recording ) {
 const song = parse( playing.now );
 const songDate = new Date( song.started );
 
-console.log( 'Now playing', song );
+console.log( '💿 Now playing', song );
 
 // Begin our bluesky post
 const postObject = {
@@ -51,7 +51,7 @@ const lines = [
   `${clockEmoji( config.timezone, song.started )} ${songDate.toLocaleTimeString( 'en-AU', timeOptions )}`,
   ``,
   `🎵 ${song.title}`,
-  `🧑‍🎤 ${song.artist}`,
+  `🧑‍🎤 ${song.artist}`,  
 ];
 
 if ( song.album !== song.title ) {
@@ -60,7 +60,7 @@ if ( song.album !== song.title ) {
 
 // Search the music streaming services for our song
 const streamingLinks = [];
-console.log( 'Searching streaming services...' );
+console.log( '🔍 Searching streaming services...' );
 
 const appleMusic = await searchAppleMusic( song );
 appleMusic && streamingLinks.push({
@@ -124,12 +124,15 @@ for ( const stream of streamingLinks ) {
 postObject.text = rt;
 
 if ( song.artwork ) {
+  console.log( '' );
 
-  console.log( 'Grabbing and uploading song artwork to Bluesky' );
+  console.log( '🖼️ Grabbing artwork' );
   const response = await fetch( song.artwork );
   const buffer = await response.arrayBuffer();
 
+  console.log( '⬆️ Uploading artwork to Bluesky...' );
   const { data } = await agent.uploadBlob( new Uint8Array( buffer ), { encoding: 'image/jpeg' } );
+  console.log( '✅ Uploaded!' );
 
   postObject.embed = {
     $type: 'app.bsky.embed.images',
@@ -142,9 +145,10 @@ if ( song.artwork ) {
       }
     }]
   };
+  console.log( '' );
 }
 
-console.log( 'Posting to Bluesky', postObject );
+console.log( '🚀 Posting to Bluesky', postObject );
 await agent.post( postObject );
 console.log( '✅ Done!' );
 
