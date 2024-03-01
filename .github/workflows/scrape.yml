@@ -13,9 +13,10 @@ jobs:
     environment: production
     
     env:
-      USERNAME: ${{ secrets.USERNAME }}
-      PASSWORD: ${{ secrets.PASSWORD }}
+      STATION: ${{ vars.STATION }}
       TIMEZONE: ${{ vars.TIMEZONE }}
+      BSKY_USERNAME: ${{ secrets.BSKY_USERNAME }}
+      BSKY_PASSWORD: ${{ secrets.BSKY_PASSWORD }}
       SPOTIFY_CLIENT: ${{ secrets.SPOTIFY_CLIENT }}
       SPOTIFY_SECRET: ${{ secrets.SPOTIFY_SECRET }}
      
