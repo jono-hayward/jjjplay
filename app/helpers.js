@@ -25,7 +25,7 @@ export const parse = song => {
 
 const getImg = art => {
   
-  if ( art.sizes.length ) {
+  if ( art.sizes && art.sizes.length ) {
 
     let largest;
 
