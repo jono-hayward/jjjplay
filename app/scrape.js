@@ -10,7 +10,7 @@ import {
 } from './helpers.js';
 
 import pkg from '@atproto/api';
-const { BskyAgent, RichText } = pkg;
+const { BskyAgent } = pkg;
 
 const config = {
   username: process.env.USERNAME,
@@ -145,7 +145,7 @@ if ( song.artwork ) {
   };
 }
 
-console.log( 'Posting' );
+console.log( 'Posting', postObject );
 await agent.post( postObject );
 console.log( 'Done!' );
 

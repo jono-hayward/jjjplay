@@ -4,6 +4,7 @@ import SpotifyWebApi from 'spotify-web-api-node';
 import YouTubeMusicAPI from 'youtube-music-api';
 
 export const parse = song => {
+
   const result = {
     started: song.played_time,
     title: song.recording.title,
@@ -11,26 +12,40 @@ export const parse = song => {
     album: song.release.title
   };
 
-  if ( song.recording.releases[0].artwork ) {
-    if (song.recording.releases[0].artwork[0].sizes ) {
-
-      let largest = null;
-
-      for ( const img of song.recording.releases[0].artwork[0].sizes ) {
-        if ( img.aspect_ratio === '1x1' && img.width <= 800 &&  ( !largest || img.width > largest.width ) ) {
-          largest = img;
-        }
-      }
-      if ( largest ) {
-        result.artwork = largest.url;
-      }
-    } else {
-      result.artwork = song.recording.releases[0].artwork[0].url;
-    }
+  if ( song.recording.artwork.length ) {
+    result.artwork = getImg( song.recording.artwork[0] )
+  } else if ( song.recording.releases.length && song.recording.releases[0].artwork.length ) {
+    result.artwork = getImg( song.recording.releases[0].artwork[0] )
   }
   
   return result;
+
 };
+
+
+const getImg = art => {
+  
+  if ( art.sizes.length ) {
+
+    let largest = null;
+
+    for ( const img of art.sizes ) {
+      if ( img.aspect_ratio === '1x1' && img.width <= 800 &&  ( !largest || img.width > largest.width ) ) {
+        largest = img;
+      }
+    }
+
+    return largest;
+
+  } else if ( art.url ) {
+
+    return art.url;
+
+  }
+
+  return false;
+
+}
 
 export const findByteRange = (largerString, substring) => {
   const encoder = new TextEncoder();
