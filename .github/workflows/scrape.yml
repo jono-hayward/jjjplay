@@ -15,6 +15,7 @@ jobs:
     env:
       STATION: ${{ vars.STATION }}
       TIMEZONE: ${{ vars.TIMEZONE }}
+      BSKY_HANDLE: ${{ vars.BSKY_HANDLE }}
       BSKY_USERNAME: ${{ secrets.BSKY_USERNAME }}
       BSKY_PASSWORD: ${{ secrets.BSKY_PASSWORD }}
       SPOTIFY_CLIENT: ${{ secrets.SPOTIFY_CLIENT }}
