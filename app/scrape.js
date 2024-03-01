@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import 'fs';
+import fs from 'fs';
 
 import {
   parse,
