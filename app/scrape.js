@@ -27,31 +27,29 @@ const timeOptions = {
 const API = `https://music.abcradio.net.au/api/v1/plays/triplej/now.json?tz=${config.timezone}`;
 
 const scrape = async () => fetch(API).then( response => response.json() );
-
-
 const playing = await scrape();
 
 
 // Bail out now if there's nothing playing
 if ( !playing.now || !playing.now.recording ) {
   console.error( 'No song currently playing' );
-
-  process.env.GITHUB_OUTPUT = "summary='**No song playing** so nothing was posted.'";
   process.exit(0);
 }
 
 const song = parse( playing.now );
-console.log( 'Now playing', song );
-
-
 const songDate = new Date( song.started );
 
+console.log( 'Now playing', song );
+
+// Begin our bluesky post
 const postObject = {
   langs: ['en-AU', 'en'],
   createdAt: songDate.toISOString(),
 };
 
 const lines = [
+  `${clockEmoji( config.timezone, song.started )} ${songDate.toLocaleTimeString( 'en-AU', timeOptions )}`,
+  ``,
   `🎵 ${song.title}`,
   `🧑‍🎤 ${song.artist}`,
 ];
@@ -60,39 +58,36 @@ if ( song.album !== song.title ) {
   lines.push( `💿 ${song.album}` );
 }
 
-lines.push(
-  ``,
-  `${clockEmoji( config.timezone, song.started )} ${songDate.toLocaleTimeString( 'en-AU', timeOptions )}`,
-);
-
+// Search the music streaming services for our song
 const streamingLinks = [];
+console.log( 'Searching streaming services...' );
 
-console.log( 'Searching Apple Music' );
 const appleMusic = await searchAppleMusic( song );
 appleMusic && streamingLinks.push({
   service: 'Apple Music',
   url: appleMusic,
-});
+}) && console.log( '✅ Found song on Apple Music' );
 
-console.log( 'Searching Spotify' );
 const spotify = await searchSpotify( song );
 spotify && streamingLinks.push({
   service: 'Spotify',
   url: spotify,
-});
+}) && console.log( '✅ Found song on Spotify' );
 
-console.log( 'Searching YouTube Music' );
 const yt = await searchYouTube( song );
 yt && streamingLinks.push({
   service: 'YouTube Music',
   url: yt,
-});
+}) && console.log( '✅ Found song on YouTube Music' );
 
+// Add found streaming services to the post
 streamingLinks.length && lines.push(
   ``,
   `🎧 ${streamingLinks.map( service => service.service ).join(' / ')}`
 );
 
+
+// Begin talking to Bluesky
 console.log( 'Logging in to Bluesky' );
 const agent = new BskyAgent({ service: "https://bsky.social" });
 await agent.login({
@@ -100,13 +95,15 @@ await agent.login({
   password: config.password,
 });
 
+
+// Put the post together
 const rt = lines.join('\n');
 
+// Add the link facets to the post
 for ( const stream of streamingLinks ) {
 
-  const serviceName = stream.service;
-
-  const { start, end } = findByteRange( rt, serviceName );
+  // Find the service name we added earlier
+  const { start, end } = findByteRange( rt, stream.service );
   
   if ( !postObject.facets ) {
     postObject.facets = [];
@@ -147,9 +144,8 @@ if ( song.artwork ) {
   };
 }
 
-console.log( 'Posting', postObject );
+console.log( 'Posting to Bluesky', postObject );
 await agent.post( postObject );
-process.env.GITHUB_OUTPUT = "summary='Posted: **${song.title}** by ${song.artist}'";
-console.log( 'Done!' );
+console.log( '✅ Done!' );
 
 process.exit(0);
