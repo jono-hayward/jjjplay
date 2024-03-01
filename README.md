@@ -1,8 +1,14 @@
 # JJJPlays
 
-This is a wholly unofficial and unauthorised recreation of the old TripleJPlays account from the bird site. Triple J stopped maintaining that account in 2021, and I've been missing it ever since. I always wanted to build a new version myself, but then Elon Musk bought Twitter and I lost all interest in making anything for it, ever.
+This is a wholly unofficial and unauthorised recreation of the old TripleJPlays account from the bird site. Triple J stopped maintaining that account in 2021, and I've been missing it ever since. 
 
-Now I'm very pleased to unveil my rebuilt version for Bluesky! Aside from just posting the songs that Triple J plays, it offers a few improvements over the old version: Better formatting, links to the song on streaming services, even album art. _Hot._
+Now I'm entirely chuffed to unveil my rebuilt version for Bluesky! Aside from just posting the songs that Triple J plays, it offers a few improvements over the old version: Better formatting, links streaming services, even album art. _Hot._
+
+## Who am I?
+
+I'm just an aging (I think the technical term is _geriatric_) millenial who has aged out of the Triple J demographic but still clings to my love of fresh tunes. Doing my part to keep spreading the love of Aussie music and Australia's greatest radio station.
+
+![](https://media1.tenor.com/m/-u-xaJEqtfEAAAAC/nounsdao-nounish.gif)
 
 ## Tech
 
