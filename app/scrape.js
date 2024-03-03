@@ -166,25 +166,30 @@ for ( const track of tracks.items ) {
   if ( song.artwork ) {
     console.log( ' ' );
 
-    console.log( '🖼️ Grabbing artwork' );
-    const response = await fetch( song.artwork );
-    const buffer = await response.arrayBuffer();
-
-    console.log( '⬆️ Uploading artwork to Bluesky...' );
-    const { data } = await agent.uploadBlob( new Uint8Array( buffer ), { encoding: 'image/jpeg' } );
-    console.log( '✅ Uploaded!' );
-
-    postObject.embed = {
-      $type: 'app.bsky.embed.images',
-      images: [{
-        alt: `Album artwork for "${song.album}" by ${song.artist}`,
-        image: data.blob,
-        aspectRatio: {
-          width: 1,
-          height: 1,
-        }
-      }]
-    };
+    console.log( '🖼️ Processing artwork' );
+    try {
+      const response = await fetch( song.artwork );
+      const buffer = await response.arrayBuffer();
+  
+      console.log( '⬆️ Uploading artwork to Bluesky...' );
+      const { data } = await agent.uploadBlob( new Uint8Array( buffer ), { encoding: 'image/jpeg' } );
+      console.log( '✅ Uploaded!' );
+  
+      postObject.embed = {
+        $type: 'app.bsky.embed.images',
+        images: [{
+          alt: `Album artwork for "${song.album}" by ${song.artist}`,
+          image: data.blob,
+          aspectRatio: {
+            width: 1,
+            height: 1,
+          }
+        }]
+      };
+    } catch ( err ) {
+      console.error( '❌ Image processing failed. Skipping...' );
+      console.error( 'Error:', err );
+    }
   }
   
   console.log( ' ' );
