@@ -68,17 +68,16 @@ const API = `https://music.abcradio.net.au/api/v1/plays/search.json?${params.toS
 const scrape = async () => fetch(API).then( response => response.json() );
 const tracks = await scrape();
 
+if ( !tracks.total ) {
+  console.log( '⛔ No new plays since last post.' );
+  process.exit(0);
+}
+
 /**
  * Sort the items into ascending order, so we post from oldest to most recent.
  * Technically since we're setting the createdAt attribute to the played time anyway,
  * this shouldn't matter. But it feels neater to do it this way?
  */
-
-if ( !tracks.total ) {
-  console.log( '🚦 No new plays since last post' );
-  process.exit(0);
-}
-
 tracks.items.sort((a, b) => new Date(a.played_time) - new Date(b.played_time));
 
 /** Iterate through tracks */
