@@ -4,23 +4,29 @@ import SpotifyWebApi from 'spotify-web-api-node';
 import YouTubeMusicAPI from 'youtube-music-api';
 
 export const parse = song => {
-
-  const result = {
-    started: song.played_time,
-    title: song.recording.title,
-    artist: song.recording.artists[0].name,
-    album: song.release.title
-  };
-
-  if ( song.recording.artwork.length ) {
-    result.artwork = getImg( song.recording.artwork[0] )
-  } else if ( song.recording.releases.length && song.recording.releases[0].artwork.length ) {
-    result.artwork = getImg( song.recording.releases[0].artwork[0] )
-  }
+  const { played_time, recording, release } = song;
+  const { title: recordingTitle, artists, artwork, releases } = recording || {};
   
-  return result;
+  if (played_time && recordingTitle && artists) {
+    const result = {
+      started: played_time,
+      title: recordingTitle,
+      artist: artists[0]?.name,
+      album: release?.title || ''
+    };
+  
+    const artworkSource = artwork?.[0] || (releases?.[0]?.artwork?.[0] && releases[0].artwork[0]);
+    if (artworkSource) {
+      result.artwork = getImg(artworkSource);
+    }
 
+    return result;
+  } else {
+    console.error( '⚠️ Failed to parse song', song );
+  }
+  return false;
 };
+
 
 
 const getImg = art => {
@@ -80,25 +86,28 @@ export const searchAppleMusic = async (song, debug=false) => {
 
   const base = 'https://itunes.apple.com/search';
 
-  const p = {
+  const params = new URLSearchParams( {
     limit: 1,
     country: 'AU',
     media: 'music',
     entity: 'musicTrack',
     term: `${sanitise_song( song.title )} ${song.artist}`,
-  }
-
-  const params = new URLSearchParams( p );
+  } );
 
   const url = `${base}?${params.toString()}`;
 
   const response = await fetch( url );
-  const results = await response.json();
-  
-  debug && console.log( 'Raw Apple Music results', results );
-
-  if ( results.resultCount ) {
-    return results.results[0].trackViewUrl;
+  if ( response.ok ) {
+    
+    const results = await response.json();
+    if ( results.resultCount ) {
+      return results.results[0].trackViewUrl;
+    }
+    
+    debug && console.log( 'Raw Apple Music results', results );
+    
+  } else {
+    console.error( '⚠️ Failed to search Apple music', response );
   }
 
   return false;
@@ -125,7 +134,7 @@ export const searchSpotify = async (song, debug=false) => {
   
   debug && console.log( 'Raw Spotify results', result );
   
-  if ( result.body.tracks && result.body.tracks.total ) {
+  if ( result && result.body && result.body.tracks && result.body.tracks.total ) {
     return result.body.tracks.items[0].external_urls.spotify;
   }
   
@@ -142,9 +151,11 @@ export const searchYouTube = async (song, debug=false) => {
   
   debug && console.log( 'Raw YouTube Music results', result );
 
-  if ( result.content ) {
+  if ( result && result.content ) {
     return `https://music.youtube.com/watch?v=${result.content[0].videoId}`;
   }
+
+  return false;
 
 };
 
