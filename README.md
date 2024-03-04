@@ -5,7 +5,7 @@ This is a wholly unofficial and unauthorised recreation of the old TripleJPlays 
 Now I'm entirely chuffed to unveil my rebuilt version for Bluesky! Aside from just posting the songs that Triple J plays, it offers a few improvements over the old version: Better formatting, links streaming services, even album art. _Hot._
 
 ## How it works
-Every five minutes, a Github Workflow runs that queries the ABC's player API and grabs a list of all the songs that have played since the last run. It then searches for each song on streaming services (Apple Music, Spotify and YouTube Music), then compiles a Bluesky post with the song's details, artwork and streaming links.
+Every five minutes, a Github Actions workflow queries the ABC's player API and grabs a list of all the songs that have played since the last run. It then searches for each song on streaming services (Apple Music, Spotify and YouTube Music), then compiles a Bluesky post with the song's details, artwork and streaming links.
 
 ## Tech
 - [ATProto API](https://github.com/bluesky-social/atproto)
