@@ -195,5 +195,5 @@ export const clockEmoji = (timezone, time) => {
     12: "🕛"
   };
 
-  return emojiMap[currentTime];
+  return emojiMap[currentTime] || '🕜';
 }
