@@ -200,8 +200,12 @@ for ( const track of tracks.items ) {
     
     console.log( ' ' );
     console.log( '🚀 Posting to Bluesky', postObject );
-    await agent.post( postObject );
-    console.log( '✅ Done!' );
+    try {
+      await agent.post( postObject );
+      console.log( '✅ Done!' );
+    } catch (err) {
+      console.error( '⛔ Failed to post to Bluesky', err );
+    }
   }
 
 }
