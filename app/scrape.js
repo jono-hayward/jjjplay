@@ -38,16 +38,17 @@ console.log( '🔍 Finding the time of the most recent post' );
 let latest;
 const feed = await agent.getAuthorFeed({
   actor: config.bsky_handle,
-  limit: 1,
+  limit: 10,
 });
 
 if ( feed && feed.data ) {
-  latest = new Date( feed.data.cursor );
+  // Filter out posts that begin with 🤖, which we're using for service updates
+  const posts = feed.data.feed.filter( entry => !entry.post.record.text.startsWith( '🤖' ) );
+  latest = new Date( posts[0].post.record.createdAt );
+
   /* Doing the API query based on the exact time of the post seems to result in a possible duplicate
-   * Just offsetting by 30 seconds should get around that
-   */
-  
-  latest.setSeconds( latest.getSeconds() + 30 );
+   * Just offsetting by a few seconds should get around that */
+  latest.setSeconds( latest.getSeconds() + 10 );
 } else {
   const now = new Date();
   now.setMinutes(now.getMinutes() - 10);
