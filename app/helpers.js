@@ -43,7 +43,7 @@ const getImg = art => {
     let largest;
 
     for ( const img of art.sizes ) {
-      largest = ( img.aspect_ratio === '1x1' && img.width <= 800 ) ? img.url : largest;
+      largest = ( img.aspect_ratio === '1x1' && img.width <= 1000 ) ? img.url : largest;
     }
 
     return largest;
