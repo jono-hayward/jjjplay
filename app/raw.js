@@ -1,13 +1,20 @@
 import 'dotenv/config';
 
-const config = {
-  timezone: process.env.TIMEZONE,
-};
+const now = new Date();
+now.setHours( now.getHours() - 8 );
+now.setMinutes( now.getMinutes() - 10 );
 
-const API = `https://music.abcradio.net.au/api/v1/plays/triplej/now.json?tz=${config.timezone}`;
+const params = new URLSearchParams( {
+  station: 'triplej',
+  order: 'desc', // We want them in descending order to always get the latest, even if for some reason there's more results than our limit
+  tz: 'Australia/Perth',
+  limit: 20,
+} );
+
+const API = `https://music.abcradio.net.au/api/v1/plays/search.json?${params.toString()}`;
 const scrape = async () => fetch( API ).then( response => response.json() );
 
 
-const playing = await scrape();
-
-console.log( playing.prev.recording.releases[0].artwork[0] );
+console.log( 'Querying:' );
+console.log( API );
+console.log( await scrape() );

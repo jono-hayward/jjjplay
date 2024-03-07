@@ -54,20 +54,19 @@ if ( feed && feed.data && feed.data.length ) {
   const now = new Date();
   now.setMinutes(now.getMinutes() - 10);
   latest = now;
-  console.log( '⌚️ No previous post found, searchf romt he last ten minutes' );
+  console.log( '⌚️ No previous post found, searching from the last ten minutes' );
 }
 
 const params = new URLSearchParams( {
   station: config.station,
   order: 'desc', // We want them in descending order to always get the latest, even if for some reason there's more results than our limit
   tz: config.timezone,
-  from: latest.toISOString().replace('Z', '+00:00:00'), // Turn the ISO string into something the ABC API will accept
-  limit: 10,
+  limit: 20,
 } );
 
 const API = `https://music.abcradio.net.au/api/v1/plays/search.json?${params.toString()}`;
 
-const scrape = async () => fetch(API).then( response => response.json() );
+const scrape = async () => fetch( API ).then( response => response.json() );
 const tracks = await scrape();
 
 if ( !tracks.total ) {
@@ -85,121 +84,127 @@ tracks.items.sort((a, b) => new Date(a.played_time) - new Date(b.played_time));
 /** Iterate through tracks */
 for ( const track of tracks.items ) {
 
-  const song = parse( track );
+  const songDate = new Date( song.played_time );
 
-  if ( song ) {
+  // Only process songs that have played since our last post
+  if ( songDate > latest ) {
 
-    const songDate = new Date( song.started );
-  
-    console.log( ' ' );
-    console.log( `🎵 Processing "${song.title}" by ${song.artist}, played at ${songDate.toLocaleTimeString( 'en-AU', timeOptions )}` );
-  
-    // Begin our bluesky post
-    const postObject = {
-      langs: ['en-AU', 'en'],
-      createdAt: songDate.toISOString(),
-      facets: [],
-    };
-  
-    const lines = [
-      `${clockEmoji( config.timezone, song.started )} ${songDate.toLocaleTimeString( 'en-AU', timeOptions )}`,
-      ``,
-      `🎵 ${song.title}`,
-      `🧑‍🎤 ${song.artist}`,  
-    ];
-  
-    if ( song.album !== song.title ) {
-      lines.push( `💿 ${song.album}` );
-    }
+    const song = parse( track );
 
-    if ( song.unearthed ) {
-      lines.push(
+    if ( song ) {
+
+    
+      console.log( ' ' );
+      console.log( `🎵 Processing "${song.title}" by ${song.artist}, played at ${songDate.toLocaleTimeString( 'en-AU', timeOptions )}` );
+    
+      // Begin our bluesky post
+      const postObject = {
+        langs: ['en-AU', 'en'],
+        createdAt: songDate.toISOString(),
+        facets: [],
+      };
+    
+      const lines = [
+        `${clockEmoji( config.timezone, song.started )} ${songDate.toLocaleTimeString( 'en-AU', timeOptions )}`,
         ``,
-        `🌱 Triple J Unearthed profile`,
-      );
-    }
-  
-    // Search the music streaming services for our song
-    const streamingLinks = [];
-    console.log( '🔍 Searching streaming services...' );
-  
-    const appleMusic = await searchAppleMusic( song );
-    appleMusic && streamingLinks.push({
-      service: 'Apple Music',
-      url: appleMusic,
-    }) && console.log( '✅ Found song on Apple Music' );
-  
-    const spotify = await searchSpotify( song );
-    spotify && streamingLinks.push({
-      service: 'Spotify',
-      url: spotify,
-    }) && console.log( '✅ Found song on Spotify' );
-  
-    const yt = await searchYouTube( song );
-    yt && streamingLinks.push({
-      service: 'YouTube Music',
-      url: yt,
-    }) && console.log( '✅ Found song on YouTube Music' );
-  
-    // Add found streaming services to the post
-    streamingLinks.length && lines.push(
-      ``,
-      `🎧 ${streamingLinks.map( service => service.service ).join(' / ')}`
-    );
-  
-  
-    // Put the post together
-    postObject.text = lines.join('\n');
-  
-    // Add the link facets to the post
-    for ( const stream of streamingLinks ) {
-      addLink( postObject, stream.service, stream.url );
-    }
+        `🎵 ${song.title}`,
+        `🧑‍🎤 ${song.artist}`,  
+      ];
+    
+      if ( song.album !== song.title ) {
+        lines.push( `💿 ${song.album}` );
+      }
 
-    // Add unearthed link
-    song.unearthed && addLink( postObject, 'Triple J Unearthed profile', song.unearthed );
-  
-    if ( song.artwork ) {
+      if ( song.unearthed ) {
+        lines.push(
+          ``,
+          `🌱 Triple J Unearthed profile`,
+        );
+      }
+    
+      // Search the music streaming services for our song
+      const streamingLinks = [];
+      console.log( '🔍 Searching streaming services...' );
+    
+      const appleMusic = await searchAppleMusic( song );
+      appleMusic && streamingLinks.push({
+        service: 'Apple Music',
+        url: appleMusic,
+      }) && console.log( '✅ Found song on Apple Music' );
+    
+      const spotify = await searchSpotify( song );
+      spotify && streamingLinks.push({
+        service: 'Spotify',
+        url: spotify,
+      }) && console.log( '✅ Found song on Spotify' );
+    
+      const yt = await searchYouTube( song );
+      yt && streamingLinks.push({
+        service: 'YouTube Music',
+        url: yt,
+      }) && console.log( '✅ Found song on YouTube Music' );
+    
+      // Add found streaming services to the post
+      streamingLinks.length && lines.push(
+        ``,
+        `🎧 ${streamingLinks.map( service => service.service ).join(' / ')}`
+      );
+    
+    
+      // Put the post together
+      postObject.text = lines.join('\n');
+    
+      // Add the link facets to the post
+      for ( const stream of streamingLinks ) {
+        addLink( postObject, stream.service, stream.url );
+      }
+
+      // Add unearthed link
+      song.unearthed && addLink( postObject, 'Triple J Unearthed profile', song.unearthed );
+    
+      if ( song.artwork ) {
+        
+        console.log( ' ' );
+        console.log( '🖼️ Processing artwork' );
+        
+        try {
+          const response = await fetch( song.artwork );
+          const buffer = await response.arrayBuffer();
+
+          // An API error stated the maximum file size as 976.56kb
+          if ( buffer.byteLength < 976560 ) {
+            console.log( '⬆️ Uploading artwork to Bluesky...' );
+            const { data } = await agent.uploadBlob( new Uint8Array( buffer ), { encoding: 'image/jpeg' } );
+            console.log( '✅ Uploaded!' );
+        
+            postObject.embed = {
+              $type: 'app.bsky.embed.images',
+              images: [{
+                alt: `Album artwork for "${song.album}" by ${song.artist}`,
+                image: data.blob,
+                aspectRatio: {
+                  width: 1,
+                  height: 1,
+                }
+              }]
+            };
+          }        
+        } catch ( err ) {
+          console.error( '❌ Image processing failed. Skipping...' );
+          console.error( 'Error:', err );
+        }
+      }
       
       console.log( ' ' );
-      console.log( '🖼️ Processing artwork' );
-      
+      console.log( '🚀 Posting to Bluesky', postObject );
       try {
-        const response = await fetch( song.artwork );
-        const buffer = await response.arrayBuffer();
-
-        // An API error stated the maximum file size as 976.56kb
-        if ( buffer.byteLength < 976560 ) {
-          console.log( '⬆️ Uploading artwork to Bluesky...' );
-          const { data } = await agent.uploadBlob( new Uint8Array( buffer ), { encoding: 'image/jpeg' } );
-          console.log( '✅ Uploaded!' );
-      
-          postObject.embed = {
-            $type: 'app.bsky.embed.images',
-            images: [{
-              alt: `Album artwork for "${song.album}" by ${song.artist}`,
-              image: data.blob,
-              aspectRatio: {
-                width: 1,
-                height: 1,
-              }
-            }]
-          };
-        }        
-      } catch ( err ) {
-        console.error( '❌ Image processing failed. Skipping...' );
-        console.error( 'Error:', err );
+        await agent.post( postObject );
+        console.log( '✅ Done!' );
+      } catch (err) {
+        console.error( '⛔ Failed to post to Bluesky', err );
       }
     }
-    
-    console.log( ' ' );
-    console.log( '🚀 Posting to Bluesky', postObject );
-    try {
-      await agent.post( postObject );
-      console.log( '✅ Done!' );
-    } catch (err) {
-      console.error( '⛔ Failed to post to Bluesky', err );
-    }
+
   }
 
 }
