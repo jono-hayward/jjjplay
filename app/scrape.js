@@ -2,7 +2,7 @@ import 'dotenv/config';
 
 import {
   parse,
-  findByteRange,
+  addLink,
   searchAppleMusic,
   searchSpotify,
   searchYouTube,
@@ -97,6 +97,7 @@ for ( const track of tracks.items ) {
     const postObject = {
       langs: ['en-AU', 'en'],
       createdAt: songDate.toISOString(),
+      facets: [],
     };
   
     const lines = [
@@ -108,6 +109,13 @@ for ( const track of tracks.items ) {
   
     if ( song.album !== song.title ) {
       lines.push( `💿 ${song.album}` );
+    }
+
+    if ( song.unearthed ) {
+      lines.push(
+        ``,
+        `🌱 Triple J Unearthed profile`,
+      );
     }
   
     // Search the music streaming services for our song
@@ -140,31 +148,15 @@ for ( const track of tracks.items ) {
   
   
     // Put the post together
-    const rt = lines.join('\n');
+    postObject.text = lines.join('\n');
   
     // Add the link facets to the post
     for ( const stream of streamingLinks ) {
-  
-      // Find the service name we added earlier
-      const { start, end } = findByteRange( rt, stream.service );
-      
-      if ( !postObject.facets ) {
-        postObject.facets = [];
-      }
-  
-      postObject.facets.push({
-        index: {
-          byteStart: start,
-          byteEnd: end
-        },
-        features: [{
-          $type: 'app.bsky.richtext.facet#link',
-          uri: stream.url
-        }]
-      });
+      addLink( postObject, stream.service, stream.url );
     }
-  
-    postObject.text = rt;
+
+    // Add unearthed link
+    song.unearthed && addLink( postObject, 'Triple J Unearthed profile', song.unearthed );
   
     if ( song.artwork ) {
       

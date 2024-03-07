@@ -14,6 +14,13 @@ export const parse = song => {
       artist: artists[0]?.name,
       album: release?.title || ''
     };
+
+    if ( artists[0].links && artists[0].links.length ) {
+      const link = artists[0].links[0];
+      if ( link.service_id === 'unearthed' ) {
+        result.unearthed = link.url;
+      }
+    }
   
     const artworkSource = artwork?.[0] || (releases?.[0]?.artwork?.[0] && releases[0].artwork[0]);
     if (artworkSource) {
@@ -51,26 +58,26 @@ const getImg = art => {
 
 }
 
-export const findByteRange = (largerString, substring) => {
+const findByteRange = (largerString, substring) => {
   const encoder = new TextEncoder();
-  const largerStringBytes = encoder.encode(largerString);
-  const substringBytes = encoder.encode(substring);
+  const largerStringBytes = encoder.encode( largerString );
+  const substringBytes = encoder.encode( substring );
 
   let start = -1;
   let end = -1;
   let currentIndex = 0;
 
-  for (let i = 0; i < largerStringBytes.length; i++) {
-    if (largerStringBytes[i] === substringBytes[currentIndex]) {
-      if (currentIndex === 0) {
+  for ( let i = 0; i < largerStringBytes.length; i++ ) {
+    if ( largerStringBytes[i] === substringBytes[currentIndex] ) {
+      if ( currentIndex === 0 ) {
         start = i;
       }
       currentIndex++;
-      if (currentIndex === substringBytes.length) {
+      if ( currentIndex === substringBytes.length ) {
         end = i + 1;
         break;
       }
-    } else if (currentIndex > 0) {
+    } else if ( currentIndex > 0 ) {
       // If substring match was broken, reset currentIndex
       currentIndex = 0;
     }
@@ -196,4 +203,26 @@ export const clockEmoji = (timezone, time) => {
   };
 
   return emojiMap[currentTime] || '🕜';
+}
+
+
+export const addLink = ( postObject, label, url ) => {
+
+  const { start, end } = findByteRange( postObject.text, label );
+
+  if ( start && end ) {
+    postObject.facets.push({
+      index: {
+        byteStart: start,
+        byteEnd: end
+      },
+      features: [{
+        $type: 'app.bsky.richtext.facet#link',
+        uri: url
+      }]
+    });
+    return true;
+  }
+
+  return false;
 }
