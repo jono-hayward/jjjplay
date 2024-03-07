@@ -1,5 +1,5 @@
-name: scrape-and-post
-run-name: Scrape and post
+name: bot-jjj
+run-name: Bot (JJJ)
 
 on:
   schedule:
@@ -10,6 +10,7 @@ on:
 jobs:
   scrape:
     runs-on: ubuntu-latest
+    environment: production
     
     env:
       STATION: ${{ vars.STATION }}
