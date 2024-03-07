@@ -20,6 +20,8 @@ const config = {
   timezone:       process.env.TIMEZONE,
 };
 
+console.log( config );
+
 const timeOptions = {
   timeStyle: 'short',
   timeZone: config.timezone,
