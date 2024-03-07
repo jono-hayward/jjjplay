@@ -84,7 +84,7 @@ tracks.items.sort((a, b) => new Date(a.played_time) - new Date(b.played_time));
 /** Iterate through tracks */
 for ( const track of tracks.items ) {
 
-  const songDate = new Date( song.played_time );
+  const songDate = new Date( track.played_time );
 
   // Only process songs that have played since our last post
   if ( songDate > latest ) {
