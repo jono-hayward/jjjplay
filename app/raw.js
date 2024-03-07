@@ -17,4 +17,5 @@ const scrape = async () => fetch( API ).then( response => response.json() );
 
 console.log( 'Querying:' );
 console.log( API );
-console.log( await scrape() );
+const tracks = await scrape();
+console.log( tracks.items[0] );
