@@ -43,7 +43,7 @@ const feed = await agent.getAuthorFeed({
   limit: 10,
 });
 
-if ( feed && feed.data && feed.data.length ) {
+if ( feed && feed.data && feed.data.feed && feed.data.feed.length ) {
   // Filter out posts that begin with 🤖, which we're using for service updates
   const posts = feed.data.feed.filter( entry => !entry.post.record.text.startsWith( '🤖' ) );
   latest = new Date( posts[0].post.record.createdAt );
