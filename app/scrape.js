@@ -41,7 +41,7 @@ const feed = await agent.getAuthorFeed({
   limit: 10,
 });
 
-if ( feed && feed.data ) {
+if ( feed && feed.data && feed.data.length ) {
   // Filter out posts that begin with 🤖, which we're using for service updates
   const posts = feed.data.feed.filter( entry => !entry.post.record.text.startsWith( '🤖' ) );
   latest = new Date( posts[0].post.record.createdAt );
@@ -49,12 +49,13 @@ if ( feed && feed.data ) {
   /* Doing the API query based on the exact time of the post seems to result in a possible duplicate
    * Just offsetting by a few seconds should get around that */
   latest.setSeconds( latest.getSeconds() + 10 );
+  console.log( `⌚️ Latest post was at ${latest.toLocaleTimeString( 'en-AU', timeOptions )}` );
 } else {
   const now = new Date();
   now.setMinutes(now.getMinutes() - 10);
   latest = now;
+  console.log( '⌚️ No previous post found, searchf romt he last ten minutes' );
 }
-console.log( `⌚️ Latest post was at ${latest.toLocaleTimeString( 'en-AU', timeOptions )}` );
 
 const params = new URLSearchParams( {
   station: config.station,
