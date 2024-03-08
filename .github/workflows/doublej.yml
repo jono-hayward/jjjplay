@@ -1,5 +1,5 @@
-name: bot-triplej
-run-name: Bot (Triple J)
+name: bot-doublej
+run-name: Bot (Double J)
 
 on:
   schedule:
@@ -10,7 +10,7 @@ on:
 jobs:
   scrape:
     runs-on: ubuntu-latest
-    environment: production
+    environment: Double J
     
     env:
       STATION: ${{ vars.STATION }}
