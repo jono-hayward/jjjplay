@@ -1,21 +1,21 @@
 import { searchAppleMusic, searchSpotify, searchYouTube } from "./helpers.js";
 
 const search = {
-  title: 'The Trouble With Us',
-  artist: 'Marcus Marr & Chet Faker'
+  title: "Eat Sleep Fuck Forever",
+  artist: "Love Fame Tragedy",
 };
 
 console.table([
   {
-    'Service': 'Apple Music',
-    'Result': await searchAppleMusic( search, true )
+    Service: "Apple Music",
+    Result: await searchAppleMusic(search, true),
   },
   {
-    'Service': 'Spotify',
-    'Result': await searchSpotify( search, true )
+    Service: "Spotify",
+    Result: await searchSpotify(search, true),
   },
   {
-    'Service': 'YouTube Music',
-    'Result': await searchYouTube( search, true )
-  }
+    Service: "YouTube Music",
+    Result: await searchYouTube(search, true),
+  },
 ]);
