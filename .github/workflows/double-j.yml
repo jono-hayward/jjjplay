@@ -1,17 +1,16 @@
-name: bot-triplej
-run-name: Bot (Triple J)
+name: bot-doublej
+run-name: Double J
 
 on:
   schedule:
-    - cron: '*/5 * * * *' # Run every two minutes
+    - cron: "*/5 * * * *" # Run every two minutes
   workflow_dispatch: # Manual run trigger
 
-    
 jobs:
   scrape:
     runs-on: ubuntu-latest
-    environment: production
-    
+    environment: Double J
+
     env:
       STATION: ${{ vars.STATION }}
       TIMEZONE: ${{ vars.TIMEZONE }}
@@ -20,19 +19,19 @@ jobs:
       BSKY_PASSWORD: ${{ secrets.BSKY_PASSWORD }}
       SPOTIFY_CLIENT: ${{ secrets.SPOTIFY_CLIENT }}
       SPOTIFY_SECRET: ${{ secrets.SPOTIFY_SECRET }}
-     
+
     steps:
       - name: Check out code
         uses: actions/checkout@v4
-        
+
       - name: Create .env
         uses: iamsauravsharma/create-dotenv@v2.0.1
-        
+
       - name: Install node
         uses: actions/setup-node@v4
         with:
-          node-version: 18
-        
+          node-version: 20
+
       - uses: pnpm/action-setup@v3
         name: Install pnpm
         with:
@@ -53,7 +52,7 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
-        run: pnpm install   
-        
+        run: pnpm install
+
       - name: Scrape!
         run: pnpm scrape
