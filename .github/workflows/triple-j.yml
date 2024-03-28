@@ -1,5 +1,4 @@
-name: triple-j
-run-name: Triple J
+name: Triple J
 
 on:
   schedule:

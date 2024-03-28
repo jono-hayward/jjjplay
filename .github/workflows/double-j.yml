@@ -1,5 +1,4 @@
-name: double-j
-run-name: Double J
+name: Double J
 
 on:
   schedule:
