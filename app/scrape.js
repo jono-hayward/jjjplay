@@ -108,6 +108,7 @@ for ( const track of tracks.items ) {
     };
   
     const lines = [
+      track.count ? `🥁 2024 Hottest 100 - #${track.count}\n` : null,
       `${clockEmoji( config.timezone, song.started )} ${song.started.toLocaleTimeString( 'en-AU', timeOptions )}`,
       ``,
       `🎵 ${song.title}`,
