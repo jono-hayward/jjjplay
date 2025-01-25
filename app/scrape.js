@@ -8,6 +8,7 @@ import {
   searchYouTube,
   clockEmoji,
   getTZDiff,
+  searchGenius,
 } from './helpers.js';
 
 import pkg from '@atproto/api';
@@ -20,8 +21,6 @@ const config = {
   station:        process.env.STATION,
   timezone:       process.env.TIMEZONE,
 };
-
-console.log( config );
 
 const timeOptions = {
   timeStyle: 'short',
@@ -153,6 +152,13 @@ for ( const track of tracks.items ) {
       ``,
       `🎧 ${streamingLinks.map( service => service.service ).join(' / ')}`
     );
+
+    // Look for lyrics
+    const genius = await searchGenius( song );
+    genius && lines.push(
+      ``,
+      `📝 Lyrics`,
+    ) && console.log( '✅ Found lyrics on Genius' );
   
   
     // Put the post together
@@ -165,11 +171,14 @@ for ( const track of tracks.items ) {
 
     // Add unearthed link
     song.unearthed && addLink( postObject, 'Triple J Unearthed', song.unearthed );
+
+    // Add Genius link
+    genius && addLink( postObject, 'Lyrics', genius );
   
     if ( song.artwork ) {
       
       console.log( ' ' );
-      console.log( '🖼️ Processing artwork' );
+      console.log( '🖼️  Processing artwork' );
       
       try {
         const response = await fetch( song.artwork );
@@ -177,7 +186,7 @@ for ( const track of tracks.items ) {
 
         // An API error stated the maximum file size as 976.56kb
         if ( buffer.byteLength < 976560 ) {
-          console.log( '⬆️ Uploading artwork to Bluesky...' );
+          console.log( '⬆️  Uploading artwork to Bluesky...' );
           const { data } = await agent.uploadBlob( new Uint8Array( buffer ), { encoding: 'image/jpeg' } );
           console.log( '✅ Uploaded!' );
       

@@ -1,4 +1,4 @@
-import { searchAppleMusic, searchSpotify, searchYouTube } from "./helpers.js";
+import { searchAppleMusic, searchSpotify, searchYouTube, searchGenius } from "./helpers.js";
 
 const search = {
   title: "Eat Sleep Fuck Forever",
@@ -17,5 +17,9 @@ console.table([
   {
     Service: "YouTube Music",
     Result: await searchYouTube(search, true),
+  },
+  {
+    Service: "Genius",
+    Result: await searchGenius(search, true),
   },
 ]);

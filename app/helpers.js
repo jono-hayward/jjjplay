@@ -235,3 +235,33 @@ export const getTZDiff = (targetTZ) => {
   // Return difference in minutes
   return Math.floor(diff / (1000 * 60));
 };
+
+export const searchGenius = async (song, debug = false) => {
+  const base = "https://api.genius.com/search";
+
+  const params = new URLSearchParams({
+    q: `${sanitise_song(song.title)} ${song.artist}`,
+  });
+
+  const url = `${base}?${params.toString()}`;
+
+  debug && console.log("Querying", url);
+
+  const response = await fetch(url, {
+    headers: {
+      Authorization: `Bearer ${process.env.GENIUS_TOKEN}`,
+    },
+  });
+  if (response.ok) {
+    const results = await response.json();
+    debug && console.log("Raw Genius results", results);
+
+    if (results.response.hits.length) {
+      return results.response.hits[0].result.url;
+    }
+  } else {
+    console.error("⚠️ Failed to search Genius", response);
+  }
+
+  return false;
+}
