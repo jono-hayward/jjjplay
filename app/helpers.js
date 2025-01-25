@@ -112,32 +112,45 @@ export const searchAppleMusic = async (song, debug = false) => {
   return false;
 };
 
-export const searchSpotify = async (song, debug = false) => {
-  var spotifyApi = new SpotifyWebApi({
-    clientId: process.env.SPOTIFY_CLIENT,
-    clientSecret: process.env.SPOTIFY_SECRET,
-  });
+const spotifyApi = new SpotifyWebApi({
+  clientId: process.env.SPOTIFY_CLIENT,
+  clientSecret: process.env.SPOTIFY_SECRET,
+});
 
-  // Retrieve an access token.
-  await spotifyApi.clientCredentialsGrant().then(
-    (data) => spotifyApi.setAccessToken(data.body["access_token"]),
-    (err) =>
-      console.log("Something went wrong when retrieving an access token", err)
-  );
+let spotifyAccessToken = null;
 
-  const result = await spotifyApi.searchTracks(
-    `track:${sanitise_song(song.title)} artist:${song.artist}`,
-    {
-      limit: 1,
-      country: "AU",
-      type: "track",
+const getSpotifyAccessToken = async () => {
+  if (!spotifyAccessToken) {
+    try {
+      const data = await spotifyApi.clientCredentialsGrant();
+      spotifyAccessToken = data.body["access_token"];
+      spotifyApi.setAccessToken(spotifyAccessToken);
+    } catch (err) {
+      console.error("🛑 Error retrieving Spotify access token", err);
     }
-  );
+  }
+};
 
-  debug && console.log("Raw Spotify results", result);
+export const searchSpotify = async (song, debug = false) => {
+  await getSpotifyAccessToken();
 
-  if (result && result.body && result.body.tracks && result.body.tracks.total) {
-    return result.body.tracks.items[0].external_urls.spotify;
+  try {
+    const result = await spotifyApi.searchTracks(
+      `track:${sanitise_song(song.title)} artist:${song.artist}`,
+      {
+        limit: 1,
+        country: "AU",
+        type: "track",
+      }
+    );
+
+    debug && console.log("Raw Spotify results", result);
+
+    if (result && result.body && result.body.tracks && result.body.tracks.total) {
+      return result.body.tracks.items[0].external_urls.spotify;
+    }
+  } catch (err) {
+    console.error("🛑 Error searching Spotify", err);
   }
 
   return false;
@@ -148,15 +161,19 @@ export const searchYouTube = async (song, debug = false) => {
   await yt.initalize();
   yt.ytcfg.VISITOR_DATA = "";
 
-  const result = await yt.search(
-    `${sanitise_song(song.title)} ${song.artist}`,
-    "song"
-  );
+  try {
+    const result = await yt.search(
+      `${sanitise_song(song.title)} ${song.artist}`,
+      "song"
+    );
 
-  debug && console.log("Raw YouTube Music results", result);
+    debug && console.log("Raw YouTube Music results", result);
 
-  if (result && result.content && result.content.length) {
-    return `https://music.youtube.com/watch?v=${result.content[0].videoId}`;
+    if (result && result.content && result.content.length) {
+      return `https://music.youtube.com/watch?v=${result.content[0].videoId}`;
+    }
+  } catch (err) {
+    console.error("🛑 Error searching YouTube", err);
   }
 
   return false;
