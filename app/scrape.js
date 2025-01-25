@@ -96,6 +96,8 @@ for ( const track of tracks.items ) {
 
   if ( song ) {
 
+    const lines = [];
+
     console.log( ' ' );
     console.log( `🎵 Processing "${song.title}" by ${song.artist}, played at ${song.started.toLocaleTimeString( 'en-AU', timeOptions )}` );
   
@@ -105,25 +107,28 @@ for ( const track of tracks.items ) {
       createdAt: song.started.toISOString(),
       facets: [],
     };
+
+    // Used during Hottest 100
+    // if ( track.count ) {
+    //   lines.push( `🥁 2024 Hottest 100 - #${track.count}`, `` );
+    // }
   
-    const lines = [
-      track.count ? `🥁 2024 Hottest 100 - #${track.count}\n` : null,
+    lines.push(
       `${clockEmoji( config.timezone, song.started )} ${song.started.toLocaleTimeString( 'en-AU', timeOptions )}`,
       ``,
       `🎵 ${song.title}`,
       `🧑‍🎤 ${song.artist}`,  
-    ];
+    );
   
+    // If the album and the song title are the same it's usually a single, and it looks weird
     if ( song.album !== song.title ) {
       lines.push( `💿 ${song.album}` );
     }
 
-    if ( song.unearthed ) {
-      lines.push(
-        ``,
-        `🌱 Triple J Unearthed`,
-      );
-    }
+    song.unearth && lines.push(
+      ``,
+      `🌱 Triple J Unearthed`,
+    );
   
     // Search the music streaming services for our song
     const streamingLinks = [];
