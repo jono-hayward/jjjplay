@@ -4,7 +4,7 @@ import SpotifyWebApi from "spotify-web-api-node";
 import YouTubeMusicAPI from "youtube-music-api";
 
 export const parse = (song) => {
-  const { played_time, recording, release } = song;
+  const { played_time, recording, release, count } = song;
   const { title: recordingTitle, artists, artwork, releases } = recording || {};
 
   if (played_time && recordingTitle && artists) {
@@ -14,6 +14,10 @@ export const parse = (song) => {
       artist: artists[0]?.name,
       album: release?.title || "",
     };
+
+    if (count) {
+      result.count = count;
+    }
 
     if (artists[0].links && artists[0].links.length) {
       const link = artists[0].links[0];

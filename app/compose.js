@@ -30,9 +30,12 @@ export const compose = async ( song, config ) => {
     };
 
     // Used during Hottest 100
-    // if ( track.count ) {
-    //   lines.push( `🥁 2024 Hottest 100 - #${track.count}`, `` );
-    // }
+    if ( song.count ) {
+	console.log('Track count found!');
+      lines.push( `🥁 2024 Hottest 200 - #${song.count}`, `` );
+    } else {
+	console.log('No track count found :(');
+    }
     
     lines.push(
         `${clockEmoji( config.timezone, song.started )} ${song.started.toLocaleTimeString( 'en-AU', timeOptions )}`,
