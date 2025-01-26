@@ -1,25 +1,17 @@
 import 'dotenv/config';
 
-import {
-  parse,
-  addLink,
-  searchAppleMusic,
-  searchSpotify,
-  searchYouTube,
-  clockEmoji,
-  getTZDiff,
-  searchGenius,
-} from './helpers.js';
+import { parse } from './helpers.js';
+import { compose } from './compose.js';
 
 import pkg from '@atproto/api';
 const { BskyAgent } = pkg;
 
 const config = {
-  bsky_handle:    process.env.BSKY_HANDLE,
-  bsky_username:  process.env.BSKY_USERNAME,
-  bsky_password:  process.env.BSKY_PASSWORD,
-  station:        process.env.STATION,
-  timezone:       process.env.TIMEZONE,
+  bsky_handle: process.env.BSKY_HANDLE,
+  bsky_username: process.env.BSKY_USERNAME,
+  bsky_password: process.env.BSKY_PASSWORD,
+  station: process.env.STATION,
+  timezone: process.env.TIMEZONE,
 };
 
 const timeOptions = {
@@ -28,7 +20,7 @@ const timeOptions = {
 };
 
 // Begin talking to Bluesky
-console.log( '🪵 Logging in to Bluesky' );
+console.log('🪵 Logging in to Bluesky');
 const agent = new BskyAgent({ service: "https://bsky.social" });
 await agent.login({
   identifier: config.bsky_username,
@@ -90,111 +82,32 @@ if ( !tracks.total ) {
 tracks.items.sort((a, b) => new Date(a.played_time) - new Date(b.played_time));
 
 /** Iterate through tracks */
-for ( const track of tracks.items ) {
+for (const track of tracks.items) {
 
-  const song = parse( track );
+  const song = parse(track);
 
-  if ( song ) {
+  if (song) {
 
-    const lines = [];
+    console.log(' ');
+    console.log(`🎵 Processing "${song.title}" by ${song.artist}, played at ${song.started.toLocaleTimeString('en-AU', timeOptions)}`);
 
-    console.log( ' ' );
-    console.log( `🎵 Processing "${song.title}" by ${song.artist}, played at ${song.started.toLocaleTimeString( 'en-AU', timeOptions )}` );
-  
-    // Begin our bluesky post
-    const postObject = {
-      langs: ['en-AU', 'en'],
-      createdAt: song.started.toISOString(),
-      facets: [],
-    };
+    const postObject = await compose(song, config);
 
-    // Used during Hottest 100
-    // if ( track.count ) {
-    //   lines.push( `🥁 2024 Hottest 100 - #${track.count}`, `` );
-    // }
-  
-    lines.push(
-      `${clockEmoji( config.timezone, song.started )} ${song.started.toLocaleTimeString( 'en-AU', timeOptions )}`,
-      ``,
-      `🎵 ${song.title}`,
-      `🧑‍🎤 ${song.artist}`,  
-    );
-  
-    // If the album and the song title are the same it's usually a single, and it looks weird
-    if ( song.album !== song.title ) {
-      lines.push( `💿 ${song.album}` );
-    }
+    if (song.artwork) {
 
-    song.unearth && lines.push(
-      ``,
-      `🌱 Triple J Unearthed`,
-    );
-  
-    // Search the music streaming services for our song
-    const streamingLinks = [];
-    console.log( '🔍 Searching streaming services...' );
-  
-    const appleMusic = await searchAppleMusic( song );
-    appleMusic && streamingLinks.push({
-      service: 'Apple Music',
-      url: appleMusic,
-    }) && console.log( '✅ Found song on Apple Music' );
-  
-    const spotify = await searchSpotify( song );
-    spotify && streamingLinks.push({
-      service: 'Spotify',
-      url: spotify,
-    }) && console.log( '✅ Found song on Spotify' );
-  
-    const yt = await searchYouTube( song );
-    yt && streamingLinks.push({
-      service: 'YouTube Music',
-      url: yt,
-    }) && console.log( '✅ Found song on YouTube Music' );
-  
-    // Add found streaming services to the post
-    streamingLinks.length && lines.push(
-      ``,
-      `🎧 ${streamingLinks.map( service => service.service ).join(' / ')}`
-    );
+      console.log(' ');
+      console.log('🖼️  Processing artwork');
 
-    // Look for lyrics
-    const genius = await searchGenius( song );
-    genius && lines.push(
-      ``,
-      `📝 Lyrics`,
-    ) && console.log( '✅ Found lyrics on Genius' );
-  
-  
-    // Put the post together
-    postObject.text = lines.join('\n');
-  
-    // Add the link facets to the post
-    for ( const stream of streamingLinks ) {
-      addLink( postObject, stream.service, stream.url );
-    }
-
-    // Add unearthed link
-    song.unearthed && addLink( postObject, 'Triple J Unearthed', song.unearthed );
-
-    // Add Genius link
-    genius && addLink( postObject, 'Lyrics', genius );
-  
-    if ( song.artwork ) {
-      
-      console.log( ' ' );
-      console.log( '🖼️  Processing artwork' );
-      
       try {
-        const response = await fetch( song.artwork );
+        const response = await fetch(song.artwork);
         const buffer = await response.arrayBuffer();
 
         // An API error stated the maximum file size as 976.56kb
-        if ( buffer.byteLength < 976560 ) {
-          console.log( '⬆️  Uploading artwork to Bluesky...' );
-          const { data } = await agent.uploadBlob( new Uint8Array( buffer ), { encoding: 'image/jpeg' } );
-          console.log( '✅ Uploaded!' );
-      
+        if (buffer.byteLength < 976560) {
+          console.log('⬆️  Uploading artwork to Bluesky...');
+          const { data } = await agent.uploadBlob(new Uint8Array(buffer), { encoding: 'image/jpeg' });
+          console.log('✅ Uploaded!');
+
           postObject.embed = {
             $type: 'app.bsky.embed.images',
             images: [{
