@@ -239,20 +239,6 @@ export const addLink = (postObject, label, url) => {
   return false;
 };
 
-export const getTZDiff = (targetTZ) => {
-  const systemTZ = Intl.DateTimeFormat().resolvedOptions().timeZone;
-
-  // Get the current time in milliseconds for both time zones
-  const now1 = new Date().toLocaleString("en-AU", { timeZone: systemTZ });
-  const now2 = new Date().toLocaleString("en-AU", { timeZone: targetTZ });
-
-  // Calculate the time difference in milliseconds
-  const diff = new Date(now2) - new Date(now1);
-
-  // Return difference in minutes
-  return Math.floor(diff / (1000 * 60));
-};
-
 export const searchGenius = async (song, debug = false) => {
   const base = "https://api.genius.com/search";
 
