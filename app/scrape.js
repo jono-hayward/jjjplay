@@ -1,3 +1,6 @@
+import fs from 'fs';
+import path from 'path';
+
 import 'dotenv/config';
 
 import { parse } from './helpers.js';
@@ -28,49 +31,57 @@ await agent.login({
 });
 
 // Get latest post date
-console.log( '🔍 Finding the time of the most recent post' );
-const feed = await agent.getAuthorFeed({
-  actor: config.bsky_handle,
-  limit: 10,
-});
+console.log('🔍 Finding the time of the most recent post');
+let feed;
+try {
+  feed = await agent.getAuthorFeed({
+    actor: config.bsky_handle,
+    filter: 'posts_no_replies',
+    limit: 10,
+  });
+} catch (err) {
+  console.error('⛔ Failed to get latest Bluesky post: ', err);
+  process.exit(1);
+}
 
 let latest;
-if ( feed?.data?.feed?.length ) {
+if (feed?.data?.feed?.length) {
 
   // Filter out posts that begin with 🤖, which we're using for service updates
-  const posts = feed.data.feed.filter( entry => !entry.post.record.text.startsWith( '🤖' ) );
-  latest = new Date( posts[0].post.record.createdAt );
+  const posts = feed.data.feed.filter(entry => !entry.post.record.text.startsWith('🤖'));
+  latest = new Date(posts[0].post.record.createdAt);
 
   /* Doing the API query based on the exact time of the post seems to result in a possible duplicate
    * Just offsetting by a few seconds should get around that */
-  latest.setSeconds( latest.getSeconds() + 10 );
+  latest.setSeconds(latest.getSeconds() + 10);
 
-  console.log( `⌚️ Latest post was at ${latest.toLocaleTimeString( 'en-AU', timeOptions )}` );
+  console.log(`⌚️ Latest post was at ${latest.toLocaleTimeString('en-AU', timeOptions)}`);
 
 } else {
 
-  console.log( '⌚️ No previous post found, searching from the last twenty minutes' );
-  
+  console.log('⌚️ No previous post found, searching from the last twenty minutes');
+
   latest = new Date();
-  latest.setMinutes( latest.getMinutes() - 20 );
+  latest.setMinutes(latest.getMinutes() - 20);
 
 }
 
-const params = new URLSearchParams( {
+// Query the ABC API
+const params = new URLSearchParams({
   station: config.station,
   tz: config.timezone,
   from: latest.toISOString().replace('Z', '+00:00:00'), // Turn the ISO string into something the ABC API will accept
   limit: 20,
   order: 'desc', // We want them in descending order to always get the latest, even if for some reason there's more results than our limit
-} );
+});
 
 const API = `https://music.abcradio.net.au/api/v1/plays/search.json?${params.toString()}`;
 
-const scrape = async () => fetch( API ).then( response => response.json() );
+const scrape = async () => fetch(API).then(response => response.json());
 const tracks = await scrape();
 
-if ( !tracks.total ) {
-  console.log( '⛔ No new plays since last post.' );
+if (!tracks.total) {
+  console.log('⛔ No new plays since last post.');
   process.exit(0);
 }
 
@@ -119,20 +130,27 @@ for (const track of tracks.items) {
               }
             }]
           };
-        }        
-      } catch ( err ) {
-        console.error( '❌ Image processing failed. Skipping...' );
-        console.error( 'Error:', err );
+        }
+      } catch (err) {
+        console.error('❌ Image processing failed. Skipping...');
+        console.error('Error:', err);
       }
     }
-    
-    console.log( ' ' );
-    console.log( '🚀 Posting to Bluesky', postObject );
+
+    console.log(' ');
+    console.log('🚀 Posting to Bluesky', postObject);
     try {
-      await agent.post( postObject );
-      console.log( '✅ Done!' );
+      await agent.post(postObject);
+      console.log('✅ Done!');
     } catch (err) {
-      console.error( '⛔ Failed to post to Bluesky: ', err );
+      console.error('⛔ Failed to post to Bluesky: ', err);
+      const logDir = path.join('./log');
+      if (!fs.existsSync(logDir)) {
+        fs.mkdirSync(logDir);
+      }
+      const logFileName = `${song.started.toISOString().replace(/[:.]/g, '-')}.json`;
+      const logFilePath = path.join(logDir, logFileName);
+      fs.writeFileSync(logFilePath, JSON.stringify(postObject, null, 2), 'utf8');
     }
   }
 
