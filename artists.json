@@ -1,8 +1,3 @@
 {
-	"artists": [
-		{
-			"abc_id": "mamQeORVY1",
-			"bsky": "did:plc:6rtp7fhjsglwfix4xyqt3ced"
-		}
-	]
+	"mamQeORVY1": "did:plc:6rtp7fhjsglwfix4xyqt3ced"
 }
