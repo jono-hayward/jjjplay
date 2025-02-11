@@ -12,6 +12,7 @@ export const parse = (song) => {
       started: new Date(played_time),
       title: recordingTitle,
       artist: artists[0]?.name,
+      artist_entity: artists[0]?.arid,
       album: release?.title || "",
     };
 
@@ -234,6 +235,28 @@ export const addLink = (postObject, label, url) => {
         {
           $type: "app.bsky.richtext.facet#link",
           uri: url,
+        },
+      ],
+    });
+    return true;
+  }
+
+  return false;
+};
+
+export const addMention = (postObject, artistName, did) => {
+  const { start, end } = findByteRange(postObject.text, artistName);
+
+  if (start && end) {
+    postObject.facets.push({
+      index: {
+        byteStart: start,
+        byteEnd: end,
+      },
+      features: [
+        {
+          $type: "app.bsky.richtext.facet#mention",
+          did
         },
       ],
     });

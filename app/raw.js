@@ -5,15 +5,20 @@ const config = {
   timezone:       process.env.TIMEZONE,
 };
 
-const now = new Date();
-now.setHours( now.getHours() - 8 );
-now.setMinutes( now.getMinutes() - 10 );
+const now = new Date('2024-12-23T00:49:00+11:00');
+// now.setHours( now.getHours() - 8 );
+// now.setMinutes( now.getMinutes() - 10 );
+
+console.log(now.toISOString());
+
+// process.exit(0);
 
 const params = new URLSearchParams( {
   station: config.station,
-  order: 'desc', // We want them in descending order to always get the latest, even if for some reason there's more results than our limit
+  order: 'asc', // We want them in descending order to always get the latest, even if for some reason there's more results than our limit
   tz: config.timezone,
-  limit: 20,
+  limit: 5,
+  from: now.toISOString().replace('Z', '+00:00:00'), // Turn the ISO string into something the ABC API will accept
 } );
 
 const API = `https://music.abcradio.net.au/api/v1/plays/search.json?${params.toString()}`;
@@ -24,3 +29,4 @@ console.log( 'Querying:' );
 console.log( API );
 const tracks = await scrape();
 console.log( tracks.items[0] );
+console.log( tracks.items[0].recording?.artists[0]?.arid );

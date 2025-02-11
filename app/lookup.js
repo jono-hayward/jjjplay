@@ -1,7 +1,6 @@
 import fs from 'fs';
 
 export const lookup = (entity) => {
-    
     const artist_file = fs.readFileSync('artists.json', 'utf8');
     
 	if (artist_file) {
@@ -13,5 +12,3 @@ export const lookup = (entity) => {
     
     return false;
 }
-
-process.exit(0);

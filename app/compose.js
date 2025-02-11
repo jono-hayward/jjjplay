@@ -5,8 +5,12 @@ import {
     searchYouTube,
     clockEmoji,
     addLink,
+    addMention,
 } from "./helpers.js";
 
+import {
+    lookup
+} from "./lookup.js";
 
 
 /**
@@ -53,6 +57,14 @@ export const compose = async ( song, config ) => {
         ``,
         `🌱 Triple J Unearthed`,
     );
+
+    // Search for the artist in our bluesky links file
+    console.log( '🦋 Searching for saved Bluesky profiles...' );
+    const bsky_profile = await lookup(song.artist_entity);
+    if (bsky_profile) {
+        console.log( '✅ Bluesky profile found, adding mention to post.' );
+        addMention(postObject, song.artist, bsky_profile.did);
+    }
     
     // Search the music streaming services for our song
     const streamingLinks = [];
