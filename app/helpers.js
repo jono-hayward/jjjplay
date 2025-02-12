@@ -245,9 +245,14 @@ export const addLink = (postObject, label, url) => {
 };
 
 export const addMention = (postObject, artistName, did) => {
+  console.log('Searching for', artistName);
+  console.log('Searching in', postObject.text);
+
   const { start, end } = findByteRange(postObject.text, artistName);
 
-  if (start && end) {
+  console.log('Found?', start, end);
+
+  if (start > -1  && end > -1) {
     postObject.facets.push({
       index: {
         byteStart: start,

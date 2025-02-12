@@ -5,7 +5,7 @@ const config = {
   timezone:       process.env.TIMEZONE,
 };
 
-const now = new Date('2024-12-23T00:49:00+11:00');
+const now = new Date('2025-02-12T03:14:00+11:00');
 // now.setHours( now.getHours() - 8 );
 // now.setMinutes( now.getMinutes() - 10 );
 
@@ -17,7 +17,7 @@ const params = new URLSearchParams( {
   station: config.station,
   order: 'asc', // We want them in descending order to always get the latest, even if for some reason there's more results than our limit
   tz: config.timezone,
-  limit: 5,
+  limit: 1,
   from: now.toISOString().replace('Z', '+00:00:00'), // Turn the ISO string into something the ABC API will accept
 } );
 
@@ -29,4 +29,4 @@ console.log( 'Querying:' );
 console.log( API );
 const tracks = await scrape();
 console.log( tracks.items[0] );
-console.log( tracks.items[0].recording?.artists[0]?.arid );
+console.log( tracks.items[0].recording?.artists[0] );
