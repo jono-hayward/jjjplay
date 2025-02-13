@@ -170,7 +170,6 @@ for (const track of tracks.items) {
   }
 
   console.log('');
-  console.log('🏁 Finished run.');
 
 }
 
@@ -179,4 +178,5 @@ if (process.env.REDIS_URL) {
   await redis.quit();
 }
 
+console.log('🏁 Finished run.');
 process.exit(0);
