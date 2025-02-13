@@ -100,11 +100,10 @@ if (!tracks.total) {
  */
 tracks.items.sort((a, b) => new Date(a.played_time) - new Date(b.played_time));
 
+let redis = null;
 if (process.env.REDIS_URL) {
   console.log('🛜 Connecting to redis');
-  const redis =  await createClient({ url: process.env.REDIS_URL }).connect();
-} else {
-  const redis = null;
+  redis =  await createClient({ url: process.env.REDIS_URL }).connect();
 }
 
 /** Iterate through tracks */
