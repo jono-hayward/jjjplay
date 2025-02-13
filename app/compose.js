@@ -7,8 +7,6 @@ import {
     addFacet,
 } from "./helpers.js";
 
-import { lookup } from "./lookup.js";
-
 
 /**
  * Compose the bluesky post based on a song
@@ -97,13 +95,15 @@ export const compose = async ( song, config, db ) => {
 
     addFacet( postObject, 'tag', '#NowPlaying', '#NowPlaying' );
 
-    // Search for the artist in our bluesky links file
-    console.log( '🦋 Searching for saved Bluesky profiles...' );
-    
-    const lookup = await db.hGetAll(`artist:${song.artist_entity}`);
-    if (Object.keys(lookup).length) {
-        console.log( '✅ Bluesky profile found, adding mention to post.' );
-        addFacet( postObject, 'mention', song.artist, lookup.did );
+    if (db) {
+        // Search for the artist in our bluesky links file
+        console.log( '🦋 Searching for saved Bluesky profiles...' );
+        
+        const lookup = await db.hGetAll(`artist:${song.artist_entity}`);
+        if (Object.keys(lookup).length) {
+            console.log( '✅ Bluesky profile found, adding mention to post.' );
+            addFacet( postObject, 'mention', song.artist, lookup.did );
+        }
     }
     
     // Add the link facets to the post
