@@ -5,7 +5,7 @@ const config = {
   timezone:       process.env.TIMEZONE,
 };
 
-const now = new Date('2025-02-12T16:50:00+11:00');
+const now = new Date('2025-01-29T02:36:00+11:00');
 
 const params = new URLSearchParams( {
   station: config.station,
