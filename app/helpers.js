@@ -285,7 +285,7 @@ export const searchGenius = async (song, debug = false) => {
 
   if (response.ok) {
     const results = await response.json();
-    debug && console.log("Raw Genius results", JSON.stringify(results, null, 2));
+    debug && console.log("Raw Genius results", results);
 
     if (results.response.hits.length) {
       const res = results.response.hits[0].result;
