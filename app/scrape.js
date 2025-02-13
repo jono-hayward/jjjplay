@@ -22,6 +22,10 @@ const timeOptions = {
   timeZone: config.timezone,
 };
 
+const now = new Date();
+console.log(`🚀 Starting run at ${now.toLocaleTimeString('en-AU', timeOptions)}`);
+console.log(``);
+
 // Begin talking to Bluesky
 console.log('🪵  Logging in to Bluesky');
 const agent = new BskyAgent({ service: "https://bsky.social" });
@@ -82,6 +86,8 @@ const tracks = await scrape();
 
 if (!tracks.total) {
   console.log('⛔ No new plays since last post.');
+  console.log('');
+  console.log('🏁 Finished early.');
   process.exit(0);
 }
 
@@ -137,11 +143,11 @@ for (const track of tracks.items) {
       }
     }
 
-    console.log(' ');
-    console.log('🚀 Posting to Bluesky', postObject);
+    console.log('');
+    console.log('✉️  Posting to Bluesky', postObject);
     try {
       await agent.post(postObject);
-      console.log('✅ Done!');
+      console.log('☑️  Done!');
     } catch (err) {
       console.error('⛔ Failed to post to Bluesky: ', err);
       postObject.error = err;
@@ -154,6 +160,9 @@ for (const track of tracks.items) {
       fs.writeFileSync(logFilePath, JSON.stringify(postObject, null, 2), 'utf8');
     }
   }
+
+  console.log('');
+  console.log('🏁 Finished run.');
 
 }
 
