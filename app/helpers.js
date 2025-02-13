@@ -12,6 +12,7 @@ export const parse = (song) => {
       started: new Date(played_time),
       title: recordingTitle,
       artist: artists[0]?.name,
+      artist_entity: artists[0]?.arid,
       album: release?.title || "",
     };
 
@@ -243,6 +244,28 @@ export const addLink = (postObject, label, url) => {
   return false;
 };
 
+export const addMention = (postObject, artistName, did) => {
+  const { start, end } = findByteRange(postObject.text, artistName);
+
+  if (start > -1 && end > -1) {
+    postObject.facets.push({
+      index: {
+        byteStart: start,
+        byteEnd: end,
+      },
+      features: [
+        {
+          $type: "app.bsky.richtext.facet#mention",
+          did
+        },
+      ],
+    });
+    return true;
+  }
+
+  return false;
+};
+
 export const searchGenius = async (song, debug = false) => {
   const base = "https://api.genius.com/search";
 
@@ -259,12 +282,16 @@ export const searchGenius = async (song, debug = false) => {
       Authorization: `Bearer ${process.env.GENIUS_TOKEN}`,
     },
   });
+
   if (response.ok) {
     const results = await response.json();
     debug && console.log("Raw Genius results", results);
 
     if (results.response.hits.length) {
-      return results.response.hits[0].result.url;
+      const res = results.response.hits[0].result;
+      if (res.title === song.title && res.primary_artist_names === song.artist) {
+        return results.response.hits[0].result.url;
+      }
     }
   } else {
     console.error("⚠️ Failed to search Genius", response);

@@ -5,8 +5,10 @@ import {
     searchYouTube,
     clockEmoji,
     addLink,
+    addMention,
 } from "./helpers.js";
 
+import { lookup } from "./lookup.js";
 
 
 /**
@@ -30,7 +32,12 @@ export const compose = async ( song, config ) => {
     };
 
     // Used during Hottest 100
-    // song.count && console.log('Track count found!');
+    // if ( song.count ) {
+	  //   console.log('Track count found!');
+    //   lines.push( `🥁 2024 Hottest 200 - #${song.count}`, `` );
+    // } else {
+	  //   console.log('No track count found :(');
+    // }
     
     lines.push(
         `${clockEmoji( config.timezone, song.started )} ${song.started.toLocaleTimeString( 'en-AU', timeOptions )}`,
@@ -40,7 +47,7 @@ export const compose = async ( song, config ) => {
     );
     
     // If the album and the song title are the same it's usually a single, and it looks weird
-    if ( song.album !== song.title ) {
+    if ( song.album && song.album !== song.title ) {
         lines.push( `💿 ${song.album}` );
     }
 
@@ -48,7 +55,7 @@ export const compose = async ( song, config ) => {
         ``,
         `🌱 Triple J Unearthed`,
     );
-    
+
     // Search the music streaming services for our song
     const streamingLinks = [];
     console.log( '🔍 Searching streaming services...' );
@@ -87,6 +94,14 @@ export const compose = async ( song, config ) => {
     
     // Put the post together
     postObject.text = lines.join('\n');
+
+    // Search for the artist in our bluesky links file
+    console.log( '🦋 Searching for saved Bluesky profiles...' );
+    const bsky_profile = await lookup(song.artist_entity);
+    if (bsky_profile) {
+        console.log( '✅ Bluesky profile found, adding mention to post.' );
+        addMention(postObject, song.artist, bsky_profile.did);
+    }
     
     // Add the link facets to the post
     for ( const stream of streamingLinks ) {

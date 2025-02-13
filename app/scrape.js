@@ -150,7 +150,8 @@ for (const track of tracks.items) {
       console.log('☑️  Done!');
     } catch (err) {
       console.error('⛔ Failed to post to Bluesky: ', err);
-      const logDir = path.join('./log');
+      postObject.error = err;
+      const logDir = path.join('./log/failed-posts');
       if (!fs.existsSync(logDir)) {
         fs.mkdirSync(logDir);
       }

@@ -3,7 +3,7 @@ import { searchAppleMusic, searchSpotify, searchYouTube, searchGenius } from "./
 const search = {
   title: "Eat Sleep Fuck Forever",
   artist: "Love Fame Tragedy",
-};
+}; 
 
 console.table([
   {
