@@ -245,14 +245,9 @@ export const addLink = (postObject, label, url) => {
 };
 
 export const addMention = (postObject, artistName, did) => {
-  console.log('Searching for', artistName);
-  console.log('Searching in', postObject.text);
-
   const { start, end } = findByteRange(postObject.text, artistName);
 
-  console.log('Found?', start, end);
-
-  if (start > -1  && end > -1) {
+  if (start > -1 && end > -1) {
     postObject.facets.push({
       index: {
         byteStart: start,
@@ -287,12 +282,16 @@ export const searchGenius = async (song, debug = false) => {
       Authorization: `Bearer ${process.env.GENIUS_TOKEN}`,
     },
   });
+
   if (response.ok) {
     const results = await response.json();
-    debug && console.log("Raw Genius results", results);
+    debug && console.log("Raw Genius results", JSON.stringify(results, null, 2));
 
     if (results.response.hits.length) {
-      return results.response.hits[0].result.url;
+      const res = results.response.hits[0].result;
+      if (res.title === song.title && res.primary_artist_names === song.artist) {
+        return results.response.hits[0].result.url;
+      }
     }
   } else {
     console.error("⚠️ Failed to search Genius", response);

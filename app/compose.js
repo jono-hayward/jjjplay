@@ -47,7 +47,7 @@ export const compose = async ( song, config ) => {
     );
     
     // If the album and the song title are the same it's usually a single, and it looks weird
-    if ( song.album !== song.title ) {
+    if ( song.album && song.album !== song.title ) {
         lines.push( `💿 ${song.album}` );
     }
 

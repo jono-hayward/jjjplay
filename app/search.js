@@ -3,7 +3,10 @@ import { searchAppleMusic, searchSpotify, searchYouTube, searchGenius } from "./
 const search = {
   title: "Eat Sleep Fuck Forever",
   artist: "Love Fame Tragedy",
-};
+}; 
+const result = await searchGenius(search, true);
+console.log(JSON.stringify(result, null, 2));
+process.exit(0);
 
 console.table([
   {

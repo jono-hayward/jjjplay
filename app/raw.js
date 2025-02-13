@@ -5,7 +5,7 @@ const config = {
   timezone:       process.env.TIMEZONE,
 };
 
-const now = new Date('2025-02-12T03:14:00+11:00');
+const now = new Date('2025-02-12T16:50:00+11:00');
 // now.setHours( now.getHours() - 8 );
 // now.setMinutes( now.getMinutes() - 10 );
 
