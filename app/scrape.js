@@ -100,8 +100,8 @@ if (!tracks.total) {
  */
 tracks.items.sort((a, b) => new Date(a.played_time) - new Date(b.played_time));
 
-console.log('🛜 Connecting to redis');
-if (!process.env.REDIS_URL) {
+if (process.env.REDIS_URL) {
+  console.log('🛜 Connecting to redis');
   const redis =  await createClient({ url: process.env.REDIS_URL }).connect();
 } else {
   const redis = null;
