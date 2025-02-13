@@ -1,6 +1,6 @@
 import 'dotenv/config';
-import { parse } from './helpers.js';
-import { compose } from './compose.js';
+import { parse } from '../helpers.js';
+import { compose } from '../compose.js';
 
 const config = {
     station: process.env.STATION,
