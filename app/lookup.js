@@ -16,3 +16,14 @@ export const lookup = (entity) => {
 
     return false;
 };
+
+export const all_artists = () => {
+    const artist_file = fs.readFileSync(path.join(__dirname, '../artists.json'), 'utf8');
+
+    if (artist_file) {
+        const artists = JSON.parse(artist_file);
+        return artists;
+    }
+
+    return false;
+};

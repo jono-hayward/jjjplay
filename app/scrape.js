@@ -3,6 +3,8 @@ import path from 'path';
 
 import 'dotenv/config';
 
+import { createClient } from 'redis';
+
 import { parse } from './helpers.js';
 import { compose } from './compose.js';
 
@@ -98,6 +100,9 @@ if (!tracks.total) {
  */
 tracks.items.sort((a, b) => new Date(a.played_time) - new Date(b.played_time));
 
+console.log('🛜 Connecting to redis');
+const redis =  await createClient({ url: process.env.REDIS_URL }).connect();
+
 /** Iterate through tracks */
 for (const track of tracks.items) {
 
@@ -108,7 +113,7 @@ for (const track of tracks.items) {
     console.log(' ');
     console.log(`🎵 Processing "${song.title}" by ${song.artist}, played at ${song.started.toLocaleTimeString('en-AU', timeOptions)}`);
 
-    const postObject = await compose(song, config);
+    const postObject = await compose(song, config, redis);
 
     if (song.artwork) {
 
@@ -165,5 +170,8 @@ for (const track of tracks.items) {
   console.log('🏁 Finished run.');
 
 }
+
+console.log('❌ Logging out of Redis');
+await redis.quit();
 
 process.exit(0);

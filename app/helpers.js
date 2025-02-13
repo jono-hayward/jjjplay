@@ -222,49 +222,50 @@ export const clockEmoji = (timezone, time) => {
   return emojiMap[currentTime] || "🕜";
 };
 
-export const addLink = (postObject, label, url) => {
-  const { start, end } = findByteRange(postObject.text, label);
+export const addFacet = (postObject, type, search, value) => {
+  const { start, end } = findByteRange(postObject.text, search);
 
-  if (start && end) {
-    postObject.facets.push({
-      index: {
-        byteStart: start,
-        byteEnd: end,
-      },
-      features: [
-        {
-          $type: "app.bsky.richtext.facet#link",
-          uri: url,
-        },
-      ],
-    });
-    return true;
+  if (start === -1 || end === -1) {
+    return false;
   }
 
-  return false;
-};
+  let feature = null;
 
-export const addMention = (postObject, artistName, did) => {
-  const { start, end } = findByteRange(postObject.text, artistName);
-
-  if (start > -1 && end > -1) {
-    postObject.facets.push({
-      index: {
-        byteStart: start,
-        byteEnd: end,
-      },
-      features: [
-        {
-          $type: "app.bsky.richtext.facet#mention",
-          did
-        },
-      ],
-    });
-    return true;
+  switch(type) {
+    case 'link':
+      feature = {
+        $type: "app.bsky.richtext.facet#link",
+        uri: value,
+      };
+      break;
+    case 'mention':
+      feature = {
+        $type: "app.bsky.richtext.facet#mention",
+        did: value,
+      };
+      break;
+    case 'tag':
+      feature = {
+        $type: 'app.bsky.richtext.facet#tag',
+        tag: value.replace(/^#/, ''),
+      };
+      break;
+    default: 
+      return false;
   }
 
-  return false;
-};
+  postObject.facets.push({
+    index: {
+      byteStart: start,
+      byteEnd: end,
+    },
+    features: [
+      feature
+    ],
+  });
+
+  return true;
+}
 
 export const searchGenius = async (song, debug = false) => {
   const base = "https://api.genius.com/search";

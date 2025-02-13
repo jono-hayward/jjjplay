@@ -4,8 +4,7 @@ import {
     searchSpotify,
     searchYouTube,
     clockEmoji,
-    addLink,
-    addMention,
+    addFacet,
 } from "./helpers.js";
 
 import { lookup } from "./lookup.js";
@@ -15,7 +14,7 @@ import { lookup } from "./lookup.js";
  * Compose the bluesky post based on a song
  * @param {*} song 
  */
-export const compose = async ( song, config ) => {
+export const compose = async ( song, config, db ) => {
 
     const timeOptions = {
         timeStyle: 'short',
@@ -40,6 +39,7 @@ export const compose = async ( song, config ) => {
     // }
     
     lines.push(
+        `#NowPlaying`,
         `${clockEmoji( config.timezone, song.started )} ${song.started.toLocaleTimeString( 'en-AU', timeOptions )}`,
         ``,
         `🎵 ${song.title}`,
@@ -95,24 +95,27 @@ export const compose = async ( song, config ) => {
     // Put the post together
     postObject.text = lines.join('\n');
 
+    addFacet( postObject, 'tag', '#NowPlaying', '#NowPlaying' );
+
     // Search for the artist in our bluesky links file
     console.log( '🦋 Searching for saved Bluesky profiles...' );
-    const bsky_profile = await lookup(song.artist_entity);
-    if (bsky_profile) {
+    
+    const lookup = await db.hGetAll(`artist:${song.artist_entity}`);
+    if (Object.keys(lookup).length) {
         console.log( '✅ Bluesky profile found, adding mention to post.' );
-        addMention(postObject, song.artist, bsky_profile.did);
+        addFacet( postObject, 'mention', song.artist, lookup.did );
     }
     
     // Add the link facets to the post
     for ( const stream of streamingLinks ) {
-        addLink( postObject, stream.service, stream.url );
+        addFacet( postObject, 'link', stream.service, stream.url );
     }
 
     // Add unearthed link
-    song.unearthed && addLink( postObject, 'Triple J Unearthed', song.unearthed );
+    song.unearthed && addFacet( postObject, 'link', 'Triple J Unearthed', song.unearthed );
 
     // Add Genius link
-    genius && addLink( postObject, 'Lyrics', genius );
+    genius && addFacet( postObject, 'link', 'Lyrics', genius );
 
     return postObject;
 }
